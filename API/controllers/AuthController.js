@@ -1,6 +1,7 @@
 const usersModel = require("../models/mongoDB_model/usersModel");
 const bcrypt = require("bcrypt");
 const { generateToken } = require("../middlewares");
+require("dotenv").config()
 const signupController = async (req, res) => {
   const user = req.body;
   const profilePic = req.file.path.replace("\\", "/");

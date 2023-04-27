@@ -1,11 +1,14 @@
 const jwt = require("jsonwebtoken");
-
-const generateToken = (id, role) =>
-  jwt.sign({ user: { id, role } }, process.env.ALBANKKY_SYS_M_TOKEN, {
+require("dotenv").config();
+// generate token
+const generateToken = (details) =>
+  jwt.sign({ user: details }, process.env.ALBANKKY_SYS_M_TOKEN, {
     expiresIn: "3d",
   });
+//   decode token
 const decodeToken = (token) =>
   jwt.verify(token, process.env.ALBANKKY_SYS_M_TOKEN);
+//   authorize token
 const authToken = async (req, res, next) => {
   var token;
   if (
@@ -13,7 +16,7 @@ const authToken = async (req, res, next) => {
     req.headers.authorization.startsWith("Bearer")
   ) {
     token = req.headers.authorization.split(" ")[1];
-    const decodedToken = jwt.verify(token, "");
+    const decodedToken = jwt.verify(token, process.env.ALBANKKY_SYS_M_TOKEN);
     req.user = await usersModel.findOne({
       where: { id: decodedToken.user.id },
     });
