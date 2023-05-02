@@ -25,4 +25,14 @@ const authToken = async (req, res, next) => {
     res.status(401).send("unautorized or invalid token");
   }
 };
-module.exports = { generateToken, authToken, decodeToken };
+function object_null_type_converter(obj) {
+    return Object.fromEntries(
+      Object.entries(obj).filter(([k, v]) => {
+        return true;
+      })
+    );
+  }
+  const generateRegistrationNumber=()=>{
+    
+  }
+module.exports = { generateToken, authToken, decodeToken, object_null_type_converter };

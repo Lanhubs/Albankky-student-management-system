@@ -17,4 +17,8 @@ const getStudentController = async (req, res) => {
     return res.json({ error, status: 4000 });
   }
 };
-module.exports = { getStudentController };
+const editMyDetailsController=(req, res)=>{
+
+}
+
+module.exports = { getStudentController, editMyDetailsController};

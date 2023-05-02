@@ -1,11 +1,11 @@
 const mongoose = require("./connection");
 const coursesSchema = mongoose.Schema({
   courseName: {
-    type: string,
+    type: String,
     required: true,
   },
   studentRegNo: [
-    { type: mongoose.Schema.Types.registrationNo, ref: "students" },
+    { type: mongoose.Schema.Types.ObjectId, ref: "students" },
   ],
 
   student: [{ type: mongoose.Schema.Types.ObjectId, ref: "students" }],

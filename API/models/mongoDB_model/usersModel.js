@@ -25,10 +25,7 @@ const studentSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  registrationNo: {
-    type: String,
-    required: true,
-  },
+
   profilePic: {
     type: String,
     required: true,
@@ -36,7 +33,7 @@ const studentSchema = mongoose.Schema({
   courses: [{ type: mongoose.Schema.Types.ObjectId, ref: "courses" }],
   registrationNumber: {
     type: String,
-    required: true,
+    unique: true,
   },
   roles: {
     type: [

@@ -1,19 +1,35 @@
 import React from "react";
-import {Drawer, DrawerBody, DrawerContent, DrawerHeader, DrawerCloseButton} from "@chakra-ui/react"
+import {Link} from "react-router-dom"
+import {
+  Drawer,
+  DrawerBody,
+  DrawerContent,
+  DrawerHeader,
+  DrawerCloseButton,
+  DrawerOverlay,
+  useDisclosure,
+  HStack,
+} from "@chakra-ui/react";
 
-const Sidebar = () => {
+const Sidebar = ({ children }) => {
+  const { isOpen, onClose, onOpen } = useDisclosure();
   return (
     <>
-    {/* <div className="fixed top-0 left-0 bg-gray-800 h-screen min-h-screen max-h-screen sm:w-screen md:w-[30vw] lg:w-[30vw]">
-      <h3 className="text-white">Profile</h3>
-    </div> */}
-    <Drawer>
-      <DrawerBody>
-        <DrawerContent>
-          
+      <span onClick={isOpen}>{children}</span>
+      <Drawer onOpen={onOpen} onClose={onClose}>
+        <DrawerOverlay backdropFilter={0.5} backdropBlur={0.5} />
+        <DrawerContent width="container.sm" bg="whiteAlpha.100">
+          <DrawerHeader height="30%">
+
+          </DrawerHeader>
+
+          <DrawerBody>
+            <HStack gap="1rem" p="1rem" as={Link} bg="green.500">
+
+            </HStack>
+          </DrawerBody>
         </DrawerContent>
-      </DrawerBody>
-    </Drawer>
+      </Drawer>
     </>
   );
 };

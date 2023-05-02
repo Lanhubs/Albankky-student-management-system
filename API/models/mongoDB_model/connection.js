@@ -1,9 +1,8 @@
 const mongoose = require("mongoose");
-const bcrypt = require("bcrypt")
+const bcrypt = require("bcryptjs");
 mongoose
-  .connect("mongodb://127.0.0.1:27017/LiamsDB")
+  .connect("mongodb://127.0.0.1:27017/albankky-student-management-system")
   .then((success) => console.log("Database connected successfully"))
-  .catch((e) => console.log(e))
-mongoose.set("strictQuery", true)
-  const Schema = mongoose.Schema
-module.exports =  mongoose
+  .catch((e) => console.log(e));
+mongoose.set("strictQuery", true);
+module.exports = mongoose;
