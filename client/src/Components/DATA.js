@@ -24,4 +24,5 @@ const SIDEBAR_DATA = [
     link: "",
   },
 ];
-export{ SIDEBAR_DATA}
+const FLEX = "flex"||"-ms-flex"||"flexbox" || "-webkit-flexbox"||"-webkit-flex"
+export{ SIDEBAR_DATA, FLEX}

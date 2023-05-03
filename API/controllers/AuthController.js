@@ -6,31 +6,36 @@ const { object_null_type_converter } = require("../middlewares/token");
 require("dotenv").config();
 const signUpController = async (req, res) => {
   try {
-    const { password, ...rest } = object_null_type_converter(req.body);
+    const user = object_null_type_converter(req.body);
+    console.log(user)
     const profilePic = req.file.path.replace("\\", "/");
-    const pwd = await bcrypt.hash(password, 20);
-    const docs = new usersModel({
+    const pwd = await bcrypt.hash(user.password, 20);
+    const Student = new usersModel({
       profilePic,
+      
       password: pwd,
-      ...rest,
+      courses: [],
     });
+    console.log(Student)
 
-    let Courses;
-    const student_courses = rest.courses.split(",");
-    student_courses.forEach(async (courseName) => {
-      Courses = new coursesModel({
-        courseName,
-        studentRegNo: docs.registrationNumber,
+    const student_courses = user.courses.split(",");
+    for (let idx = 0; idx < student_courses.length; idx++) {
+      const course = student_courses[idx];
+      const courses = new coursesModel({
+        courseName: course,
+        student: Student._id,
       });
-      await Courses.save();
-    });
+      await courses.save();
+      console.log(course);
+      Student.courses.push(course._id);
+    }
 
-    if (docs) {
-      await docs.save();
+    if (Student) {
+      await Student.save();
       return res.send({
-        docs,
+        Student,
         msg: "successfully created an account",
-        token: generateToken({ _id: docs._id, role: docs.role }),
+        token: generateToken({ _id: Student._id, role: Student.role }),
         status: 2000,
       });
     }
