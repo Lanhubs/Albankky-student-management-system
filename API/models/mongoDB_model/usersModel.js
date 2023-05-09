@@ -9,7 +9,7 @@ const studentSchema = mongoose.Schema({
     type: String,
     required: [true, "password field is compulsory"],
     allowNull: false,
-    select: false
+    select: false,
   },
   email: {
     type: String,
@@ -33,7 +33,7 @@ const studentSchema = mongoose.Schema({
   courses: [{ type: mongoose.Schema.Types.ObjectId, ref: "courses" }],
   registrationNumber: {
     type: String,
-    unique: true,
+    unique: [true, "registration number already in use"],
   },
   roles: {
     type: [
@@ -42,7 +42,7 @@ const studentSchema = mongoose.Schema({
         enum: ["student", "admin"],
       },
     ],
-    required: true,
+
     default: ["student"],
   },
 });
