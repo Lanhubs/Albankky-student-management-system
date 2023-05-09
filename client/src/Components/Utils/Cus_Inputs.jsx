@@ -12,7 +12,7 @@ import {
 } from "@chakra-ui/react";
 import React, { useRef } from "react";
 import { MdDeleteOutline, MdOutlineCloudUpload } from "react-icons/md";
-import { FaEyeAlt, FaEyeSlashAlt } from "react-icons/fa";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 import { FLEX } from "../DATA";
 
@@ -114,42 +114,54 @@ export const Cus_File_Uploaf_Input = ({ placeholder, handleChange }) => {
     </Box>
   );
 };
-export const Cus_Input = ({ placeholder, label, inputType, handleChange}) => {
-  const [pwdVisibility, setPwdVisibility] = React.useState(false);
+export const Cus_Input = ({ placeholder, label, inputType, handleChange }) => {
   return (
-    <FormControl>
+    <FormControl w="full">
       <FormLabel>{label}</FormLabel>
-      {inputType === "password" ? (
-        <InputGroup>
-          <Input
-            placeholder={placeholder}
-            border="1.5px solid"
-            borderColor="green.500"
-          onChange={(e)=>handleChange(e.target.value)}
-
-            p="10px"
-            width="full"
-            type={pwdVisibility ? "text" : "password"}
-          />
-          <button
-            className="custom-button hover:bg-slate-500"
-            onClick={setPwdVisibility(true)}
-          >
-            {pwdVisibility ? <FaEyeAlt /> : <FaEyeSlashAlt />}
-          </button>
-        </InputGroup>
-      ) : (
+      
         <Input
           placeholder={placeholder}
-          onChange={(e)=>handleChange(e.target.value)}
+          onChange={(e) => handleChange(e.target.value)}
+          border="1.5px solid"
+          borderColor="green.500"
+       
+          borderRadius="10px"
+          p="10px"
+          width="full"
+          type={inputType}
+        />
+   
+    </FormControl>
+  );
+};
+export const Password = ({ placeholder, label, inputType, handleChange }) => {
+  const [pwdVisibility, setPwdVisibility] = React.useState(false);
+  return (
+    <FormControl w="full">
+      <FormLabel>{label}</FormLabel>
+      
+        <InputGroup
+          rounded={"md"}
+          borderRadius="md"
           border="1.5px solid"
           borderColor="green.500"
           p="10px"
           width="full"
-          type={inputType}
-
-        />
-      )}
+        >
+          <Input
+            borderRadius="10px"
+            placeholder={placeholder}
+            onChange={(e) => handleChange(e.target.value)}
+            type={pwdVisibility ? "text" : "password"}
+          />
+          <button
+            className="custom-button hover:bg-slate-500"
+            onClick={setPwdVisibility(!pwdVisibility)}
+          >
+            {pwdVisibility ? <FaEye /> : <FaEyeSlash />}
+          </button>
+        </InputGroup>
+     
     </FormControl>
   );
 };

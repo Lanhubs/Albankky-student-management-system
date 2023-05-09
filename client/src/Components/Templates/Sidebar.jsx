@@ -9,29 +9,58 @@ import {
   DrawerOverlay,
   useDisclosure,
   HStack,
-  Link
+  Link,
+  Text,
+  Box,
 } from "@chakra-ui/react";
+import { FLEX, SIDEBAR_DATA } from "../DATA";
 
 const Sidebar = ({ children }) => {
-  const { isOpen, onClose, onOpen } = useDisclosure();
+const [showSideBar, setShowSideBar] = React.useState(false)
   return (
     <>
-      {/* <span onClick={isOpen}>{children}</span> */}
-      <Drawer onOpen={true} onClose={onClose}>
-        <DrawerOverlay backdropFilter={0.5} backdropBlur={0.5} />
-        <DrawerContent width="container.sm" bg="whiteAlpha.100">
-          <DrawerHeader height="30%">
+      <span onClick={setShowSideBar(true)}>{children}</span>
 
-          </DrawerHeader>
-
-          <DrawerBody bg="#fff">
-            <HStack gap="1rem" p="1rem" as={Link} bg="green.500">
-
-            </HStack>
-
-          </DrawerBody>
-        </DrawerContent>
-      </Drawer>
+      <Box
+        transition="2s ease"
+        width={{ base: "full", md: "250px", lg: "270px" }}
+        pos="fixed"
+        zIndex={100}
+        h="100vh"
+        bg="#000"
+        borderRightWidth={1}
+        borderRightColor={"#E9EAEC"}
+        fontFamily="clash"
+        display={{
+          base: showSideBar ? "flex" : "none",
+          md: FLEX,
+          lg: FLEX,
+        }}
+        justifyContent="space-between"
+        flexDirection="col"
+      >
+        <Box height="30%" w="full" bg="#fff"></Box>
+        {SIDEBAR_DATA?.map((item, idx) => (
+          <HStack
+            m="10px"
+            alignItems="center"
+            gap="1rem"
+            p="1rem"
+            key={idx}
+            to="#"
+            justifyContent="space-between"
+            mx="1rem"
+            as={Link}
+            textColor="#fff"
+            bg="green.500"
+          >
+            <Text textTransform="capitalize" textColor="#fff" fontWeight={500}>
+              {item.title}
+            </Text>
+            {item.icon}
+          </HStack>
+        ))}
+      </Box>
     </>
   );
 };

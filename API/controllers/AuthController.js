@@ -4,44 +4,57 @@ const bcrypt = require("bcryptjs");
 const { generateToken } = require("../middlewares");
 const { object_null_type_converter } = require("../middlewares/token");
 require("dotenv").config();
-const signUpController = async (req, res) => {
+const signUpController = (req, res) => {
   try {
     const user = object_null_type_converter(req.body);
-    console.log(user);
     const profilePic = req.file.path.replace("\\", "/");
-    const pwd = await bcrypt.hash(user.password, 20);
-    
-    const Student = new usersModel({
-      profilePic,
-      ...user,
-      password: pwd,
-      courses: [],
-    });
-    var my_courses = [];
-    const student_courses = user.courses.split(",");
-    console.log(student_courses)
-    for (let idx = 0; idx < student_courses.length; idx++) {
-      const course = student_courses[idx];
-      my_courses.push({
-        courseName: course,
-        student: Student._id,
+    bcrypt.hash(user.password, 20, (err, hashedPwd) => {
+      if (err) {
+        throw Error(err);
+      }
+      const docs = new usersModel({
+        fullName: user.fullName,
+        email: user.email,
+        password: hashedPwd,
+        courses: [],
+        fingerPrintId: user.fingerPrintId,
+        profilePic,
+        dateOfBirth: user.dateOfBirth,
+        registrationNumber: user.registrationNumber,
+        roles: "student",
       });
 
-    }
-    const Courses = await coursesModel.insertMany(my_courses).populate("student")
-    console.log(Courses)
-    if(Courses){
-      Courses.forEach(item=> Student.courses.push(item.courseName))
-      if (Student) {
-        await Student.save();
-        return res.send({
-          Student,
-          msg: "successfully created an account",
-          token: generateToken({ _id: Student._id, role: Student.role }),
-          status: 2000,
+      const courses = user.courses.split(",");
+      let Courses = [];
+      let dep_courses;
+      for (let index = 0; index < courses.length; index++) {
+        const course = courses[index];
+        // Courses.push({ courseName: course, student: docs._id });
+        dep_courses = new coursesModel({
+          courseName: course,
+          student: docs._id,
+        });
+        docs.courses.push(dep_courses._id);
+        dep_courses.save()
+      }
+    
+          if (dep_courses) {
+            docs
+              .save()
+              .then((docs) => {
+
+               res.send({data: docs, status: 2000, msg: "You've successfully enrolled"})
+              })
+              .catch((err) => {
+                throw Error(err);
+              })         
+        .catch((err) => {
+          if (err) {
+            throw Error(err);
+          }
         });
       }
-    }
+    });
   } catch (error) {
     if (error) {
       return res.status(405).send({ msg: error, status: 4000 });

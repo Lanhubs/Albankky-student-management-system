@@ -4,9 +4,9 @@ const express = require("express"),
   routes = require("./routes/routes")
   // fileupload = require("express-fileupload")
 
-// app.use(cors());
+app.use(cors());
 app.use(express.json()) 
-app.use(express.urlencoded({extended: false}))
+// app.use(express.urlencoded({extended: false}))
 // app.use(fileupload())
 app.use(express.static(__dirname + "public"));
 

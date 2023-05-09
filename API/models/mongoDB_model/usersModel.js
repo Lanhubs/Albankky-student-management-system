@@ -42,7 +42,7 @@ const studentSchema = mongoose.Schema({
         enum: ["student", "admin"],
       },
     ],
-
+    required: false,
     default: ["student"],
   },
 });

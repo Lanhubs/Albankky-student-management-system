@@ -4,7 +4,7 @@ const models = require("../models/mongoDB_model");
 const getStudentController = async (req, res) => {
   try {
     const user = req.user;
-    if ((user.role = "student")) {
+    if ((user.role.includes("student"))) {
       const docs = await models.usersModel
         .findById({_id: user._id})
         .populate("courses")
