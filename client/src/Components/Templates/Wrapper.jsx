@@ -9,25 +9,23 @@ const Wrapper = ({ children }) => {
     <>
       <Box
         width="100vw"
-        height={{base: "100%", md: "100vh", lg: "100vh"}}
+        height={{ base: "100%", md: "100vh", lg: "100vh" }}
         style={{
           backgroundColor: " #FAFAFA",
         }}
       >
         <Sidebar />
-       {/*  <Box
+        {/*  <Box
           height="100%"
-
+        
           overflowY={"hidden"}
-                    ml={{ sm: 0, md: "29rem" }}
-          marginLeft={{ sm: 0, md: "29rem" }}
-          marginLeft={"290px"}
+          ml={{ sm: 0, md: "290px" }}
           overflowX="hidden"
-          
           zIndex={100}
-        >
+        > */}
+        <div className="h-screen bg-[#fafafa] overflow-y-visible md:ml-[290px] sm:[ml-0] overflow-x-hidden z-[1000]">
           {children}
-        </Box> */}
+        </div>
       </Box>
     </>
   );

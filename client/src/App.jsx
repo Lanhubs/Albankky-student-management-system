@@ -10,11 +10,10 @@ import Enrol from "./pages/Onboarding";
 import { Login } from "./pages/Onboarding/Login";
 import { Global } from "@emotion/react";
 import { ChakraProvider } from "@chakra-ui/react";
-import Fonts, { theme } from "./Components/Utils/GlobalStyles";
 function App() {
   return (
-    <ChakraProvider theme={theme}>
-      <Fonts/>
+    <ChakraProvider >
+      {/* <Fonts/> */}
     <BrowserRouter>
  
       <Routes>

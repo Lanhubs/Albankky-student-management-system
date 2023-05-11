@@ -1,4 +1,4 @@
-import { Box, HStack, Stack, Text, Card,  } from "@chakra-ui/react";
+import { Box, HStack, Stack, Text, Card } from "@chakra-ui/react";
 import React from "react";
 import { MOCK_STUDENTS_DETAILS } from "../../Components/DATA";
 import Wrapper from "../../Components/Templates/Wrapper";
@@ -19,11 +19,10 @@ const Home = () => {
               d="flex"
               flexDir="column"
               shadow="md"
-            textTransform="capitalize"
+              textTransform="capitalize"
             >
               <Text>{item.dept}</Text>
               <Text> {item.amount}</Text>
-
             </Box>
           ))}
         </HStack>

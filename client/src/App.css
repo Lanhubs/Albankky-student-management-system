@@ -30,3 +30,21 @@
   width: 100%;
   height: 50px;
 }
+
+
+
+@font-face {
+  font-family: 'Roboto';
+  src: url("./assets/Fonts/Roboto-Black.ttf");
+
+}
+@font-face {
+  font-family: 'Roboto light';
+  src: url("./assets/Fonts/Roboto-Light.ttf");
+
+}
+@font-face {
+  font-family: 'Roboto medium';
+  src: url("./assets/Fonts/Roboto-Medium.ttf");
+
+}

@@ -54,10 +54,12 @@ const Sidebar = ({ children }) => {
               textColor="#fff"
             >
               <Text
-              fontFamily={"Roboto"}
+                fontFamily={"Roboto light"}
                 textTransform="capitalize"
                 textColor="#fff"
                 fontWeight={500}
+                as="div"
+
               >
                 {item.title}
               </Text>

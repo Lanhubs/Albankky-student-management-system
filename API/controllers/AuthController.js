@@ -28,15 +28,20 @@ const signUpController = (req, res) => {
       let Courses = [];
       let dep_courses;
 
+      courses.map((item) => {
+        Courses.push({
+          courseName: item,
+          student: docs._id,
+        });
 
-      courses.map(async (item) => {
-        dep_courses = new coursesModel({
+/*         dep_courses = new coursesModel({
           courseName: item,
           student: docs._id,
         });
         docs.courses.push(dep_courses._id);
-        await dep_courses.save();
+        await dep_courses.save(); */
       });
+      console.log(courses)
       if (dep_courses) {
         docs
           .save()

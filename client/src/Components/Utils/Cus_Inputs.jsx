@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Flex,
   FormControl,
   FormLabel,
@@ -120,8 +121,8 @@ export const Cus_File_Uploaf_Input = ({ placeholder, handleChange }) => {
 };
 export const Cus_Input = ({ placeholder, label, inputType, handleChange }) => {
   return (
-    <FormControl  flexDir="col">
-      <FormLabel color="#000">{label}</FormLabel>
+    <FormControl flexDir="col" w="full">
+      <FormLabel textTransform="capitalize" fontSize={16}>{label}</FormLabel>
 
       <Input
         placeholder={placeholder}
@@ -130,6 +131,7 @@ export const Cus_Input = ({ placeholder, label, inputType, handleChange }) => {
         borderColor="green.500"
         borderRadius="10px"
         p="10px"
+        height="50px"
         width="full"
         type={inputType}
       />
@@ -140,28 +142,33 @@ export const Password = ({ placeholder, label, inputType, handleChange }) => {
   const [pwdVisibility, setPwdVisibility] = React.useState(false);
   return (
     <FormControl w="full">
-      <FormLabel>{label}</FormLabel>
+      <FormLabel textTransform="capitalize" fontSize={18}>{label}</FormLabel>
 
       <InputGroup
         rounded={"md"}
         borderRadius="md"
         border="1.5px solid"
         borderColor="green.500"
-        p="10px"
         width="full"
       >
         <Input
-          borderRadius="10px"
+          width="100%"
+          border="none"
           placeholder={placeholder}
           onChange={(e) => handleChange(e.target.value)}
           type={pwdVisibility ? "text" : "password"}
         />
-        <button
-          className="custom-button hover:bg-slate-500"
-          onClick={()=>setPwdVisibility(!pwdVisibility)}
+        <Button
+          width="10%"
+          className=" hover:bg-transparent"
+          onClick={() => setPwdVisibility(!pwdVisibility)}
         >
-          {pwdVisibility ? <FaEye /> : <FaEyeSlash />}
-        </button>
+          {pwdVisibility ? (
+            <FaEye fontSize={20} />
+          ) : (
+            <FaEyeSlash fontSize={20} />
+          )}
+        </Button>
       </InputGroup>
     </FormControl>
   );
