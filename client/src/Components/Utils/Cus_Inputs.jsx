@@ -7,8 +7,12 @@ import {
   Image,
   Input,
   InputGroup,
+  Menu,
+  MenuItem,
+  MenuList,
   TagLabel,
   Text,
+  useDisclosure,
 } from "@chakra-ui/react";
 import React, { useRef } from "react";
 import { MdDeleteOutline, MdOutlineCloudUpload } from "react-icons/md";
@@ -116,21 +120,19 @@ export const Cus_File_Uploaf_Input = ({ placeholder, handleChange }) => {
 };
 export const Cus_Input = ({ placeholder, label, inputType, handleChange }) => {
   return (
-    <FormControl w="full">
-      <FormLabel>{label}</FormLabel>
-      
-        <Input
-          placeholder={placeholder}
-          onChange={(e) => handleChange(e.target.value)}
-          border="1.5px solid"
-          borderColor="green.500"
-       
-          borderRadius="10px"
-          p="10px"
-          width="full"
-          type={inputType}
-        />
-   
+    <FormControl  flexDir="col">
+      <FormLabel color="#000">{label}</FormLabel>
+
+      <Input
+        placeholder={placeholder}
+        onChange={(e) => handleChange(e.target.value)}
+        border="1.5px solid"
+        borderColor="green.500"
+        borderRadius="10px"
+        p="10px"
+        width="full"
+        type={inputType}
+      />
     </FormControl>
   );
 };
@@ -139,29 +141,82 @@ export const Password = ({ placeholder, label, inputType, handleChange }) => {
   return (
     <FormControl w="full">
       <FormLabel>{label}</FormLabel>
-      
-        <InputGroup
-          rounded={"md"}
-          borderRadius="md"
-          border="1.5px solid"
-          borderColor="green.500"
-          p="10px"
-          width="full"
+
+      <InputGroup
+        rounded={"md"}
+        borderRadius="md"
+        border="1.5px solid"
+        borderColor="green.500"
+        p="10px"
+        width="full"
+      >
+        <Input
+          borderRadius="10px"
+          placeholder={placeholder}
+          onChange={(e) => handleChange(e.target.value)}
+          type={pwdVisibility ? "text" : "password"}
+        />
+        <button
+          className="custom-button hover:bg-slate-500"
+          onClick={()=>setPwdVisibility(!pwdVisibility)}
         >
-          <Input
-            borderRadius="10px"
-            placeholder={placeholder}
-            onChange={(e) => handleChange(e.target.value)}
-            type={pwdVisibility ? "text" : "password"}
-          />
-          <button
-            className="custom-button hover:bg-slate-500"
-            onClick={setPwdVisibility(!pwdVisibility)}
-          >
-            {pwdVisibility ? <FaEye /> : <FaEyeSlash />}
-          </button>
-        </InputGroup>
-     
+          {pwdVisibility ? <FaEye /> : <FaEyeSlash />}
+        </button>
+      </InputGroup>
     </FormControl>
+  );
+};
+export const Cus_Select = () => {
+  const selector = useRef();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [courses, setCourses] = React.useState();
+  selector.current.click(() => {
+    setCourses((value) => {
+      value += selector.current.textContent;
+    });
+  });
+  const options = [
+    "Math",
+    "Computer Science",
+    "computer programming",
+    "software architecture and design",
+    "software engineering",
+    "operating system",
+    "Object oriented programming",
+    "structural programming",
+    "functional programming",
+  ];
+  return (
+    <>
+      <FormControl>
+        <FormLabel>choose courses</FormLabel>
+        <Input
+          value={courses}
+          onFocus={isOpen}
+          w="full"
+          placeholder="courses"
+          onChange={(e) => setCourses(e.target.value)}
+        />
+      </FormControl>
+      <Menu onOpen={onOpen} onClose={onClose} placement="bottom">
+        <MenuList>
+          {options.map((item, idx) => (
+            <MenuItem
+              ref={selector}
+              p="10px"
+              onClick={(e) => {
+                setCourses((value) => {
+                  value += "," + e.currentTarget.textContent;
+                });
+                // onClose()
+              }}
+              key={idx}
+            >
+              {item}
+            </MenuItem>
+          ))}
+        </MenuList>
+      </Menu>
+    </>
   );
 };

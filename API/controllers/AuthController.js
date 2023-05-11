@@ -27,32 +27,34 @@ const signUpController = (req, res) => {
       const courses = user.courses.split(",");
       let Courses = [];
       let dep_courses;
-      for (let index = 0; index < courses.length; index++) {
-        const course = courses[index];
-        // Courses.push({ courseName: course, student: docs._id });
+
+
+      courses.map(async (item) => {
         dep_courses = new coursesModel({
-          courseName: course,
+          courseName: item,
           student: docs._id,
         });
         docs.courses.push(dep_courses._id);
-        dep_courses.save()
-      }
-    
-          if (dep_courses) {
-            docs
-              .save()
-              .then((docs) => {
-
-               res.send({data: docs, status: 2000, msg: "You've successfully enrolled"})
-              })
-              .catch((err) => {
-                throw Error(err);
-              })         
-        .catch((err) => {
-          if (err) {
+        await dep_courses.save();
+      });
+      if (dep_courses) {
+        docs
+          .save()
+          .then((docs) => {
+            res.send({
+              data: docs,
+              status: 2000,
+              msg: "You've successfully enrolled",
+            });
+          })
+          .catch((err) => {
             throw Error(err);
-          }
-        });
+          })
+          .catch((err) => {
+            if (err) {
+              throw Error(err);
+            }
+          });
       }
     });
   } catch (error) {

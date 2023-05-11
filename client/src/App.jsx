@@ -8,9 +8,15 @@ import Students from "./pages/Students";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Enrol from "./pages/Onboarding";
 import { Login } from "./pages/Onboarding/Login";
+import { Global } from "@emotion/react";
+import { ChakraProvider } from "@chakra-ui/react";
+import Fonts, { theme } from "./Components/Utils/GlobalStyles";
 function App() {
   return (
+    <ChakraProvider theme={theme}>
+      <Fonts/>
     <BrowserRouter>
+ 
       <Routes>
         <Route path="/" exact element={<Home />} />
         <Route path="/enrol" exact element={<Enrol />} />
@@ -20,6 +26,7 @@ function App() {
 
       </Routes>
     </BrowserRouter>
+  </ChakraProvider>
   );
 }
 

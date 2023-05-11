@@ -7,17 +7,28 @@ import { Box } from "@chakra-ui/react";
 const Wrapper = ({ children }) => {
   return (
     <>
-      <div
-        className="w-screen sm:h-full md:h-full clash-font-family"
+      <Box
+        width="100vw"
+        height={{base: "100%", md: "100vh", lg: "100vh"}}
         style={{
           backgroundColor: " #FAFAFA",
         }}
       >
         <Sidebar />
-        <div className="h-full bg-[#fafafa] overflow-y-visible md:ml-[290px] sm:[ml-0] overflow-x-hidden z-[1000]">
+       {/*  <Box
+          height="100%"
+
+          overflowY={"hidden"}
+                    ml={{ sm: 0, md: "29rem" }}
+          marginLeft={{ sm: 0, md: "29rem" }}
+          marginLeft={"290px"}
+          overflowX="hidden"
+          
+          zIndex={100}
+        >
           {children}
-        </div>
-      </div>
+        </Box> */}
+      </Box>
     </>
   );
 };

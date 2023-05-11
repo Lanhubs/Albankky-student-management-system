@@ -23,18 +23,23 @@ const studentSchema = mongoose.Schema({
   },
   fingerPrintId: {
     type: String,
-    required: true,
+    required: false,
   },
-
   profilePic: {
     type: String,
-    required: true,
+    required: false,
   },
   courses: [{ type: mongoose.Schema.Types.ObjectId, ref: "courses" }],
   registrationNumber: {
     type: String,
+    required: false,
     unique: [true, "registration number already in use"],
   },
+/*   verified: {
+    type: Boolean,
+    required: true
+    default: false,
+  }, */
   roles: {
     type: [
       {

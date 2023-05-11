@@ -16,14 +16,14 @@ import {
 import { FLEX, SIDEBAR_DATA } from "../DATA";
 
 const Sidebar = ({ children }) => {
-const [showSideBar, setShowSideBar] = React.useState(false)
+  const [showSideBar, setShowSideBar] = React.useState(false);
   return (
     <>
-      <span onClick={setShowSideBar(true)}>{children}</span>
+      <span onClick={() => setShowSideBar(true)}>{children}</span>
 
       <Box
         transition="2s ease"
-        width={{ base: "full", md: "250px", lg: "270px" }}
+        width={{ sm: "full", md: "290px", lg: "290px" }}
         pos="fixed"
         zIndex={100}
         h="100vh"
@@ -36,30 +36,35 @@ const [showSideBar, setShowSideBar] = React.useState(false)
           md: FLEX,
           lg: FLEX,
         }}
-        justifyContent="space-between"
-        flexDirection="col"
+        flexDirection="column"
       >
         <Box height="30%" w="full" bg="#fff"></Box>
-        {SIDEBAR_DATA?.map((item, idx) => (
-          <HStack
-            m="10px"
-            alignItems="center"
-            gap="1rem"
-            p="1rem"
-            key={idx}
-            to="#"
-            justifyContent="space-between"
-            mx="1rem"
-            as={Link}
-            textColor="#fff"
-            bg="green.500"
-          >
-            <Text textTransform="capitalize" textColor="#fff" fontWeight={500}>
-              {item.title}
-            </Text>
-            {item.icon}
-          </HStack>
-        ))}
+        <Box w="full" fontFamily="Roboto">
+          {SIDEBAR_DATA?.map((item, idx) => (
+            <HStack
+              m="10px"
+              alignItems="center"
+              gap="1rem"
+              p="1rem"
+              key={idx}
+              to="#"
+              justifyContent="space-between"
+              mx="1rem"
+              as={Link}
+              textColor="#fff"
+            >
+              <Text
+              fontFamily={"Roboto"}
+                textTransform="capitalize"
+                textColor="#fff"
+                fontWeight={500}
+              >
+                {item.title}
+              </Text>
+              {item.icon}
+            </HStack>
+          ))}
+        </Box>
       </Box>
     </>
   );

@@ -1,6 +1,7 @@
 #root {
-  max-width: 1280px;
-  
+    max-width: 100vw;
+  width: 100vw;
+
   text-align: center;
 }
 :root {
@@ -17,11 +18,10 @@
   -webkit-text-size-adjust: 100%;
 }
 
-.App{
+.App {
   background-color: #fff;
-
 }
-.custom-button{
+.custom-button {
   all: unset;
   display: flex;
   align-items: center;
@@ -29,5 +29,4 @@
   border-radius: 15px;
   width: 100%;
   height: 50px;
-
 }

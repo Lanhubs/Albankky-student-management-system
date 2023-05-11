@@ -1,4 +1,12 @@
-import { Box, Button, Card, Heading, Input, FormControl,FormLabel,  } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Card,
+  Heading,
+  Input,
+  FormControl,
+  FormLabel,
+} from "@chakra-ui/react";
 import React from "react";
 import { FLEX } from "../../Components/DATA";
 import { Cus_Input, Password } from "../../Components/Utils/Cus_Inputs";
@@ -16,7 +24,7 @@ export const Login = () => {
       justifyContent="center"
     >
       <Card
-        width={{ base: "90%", lg: "50%"}}
+        width={{ base: "90%", lg: "50%" }}
         p="2rem 1rem"
         d={FLEX}
         display={FLEX}
@@ -26,29 +34,39 @@ export const Login = () => {
         bg="#fff"
         gap="1rem"
         background="#fff"
-
       >
-        <Heading textAlign="center" my="1.rem">Log in to Portal</Heading>
-        <Cus_Input
-          handleChange={setRegNo}
-          inputType={"text"}
-          
-          placeholder="CSC/YEAR/CSC/S|N"
-          label={"registration Number"}
-        />
-        <Password
-          
+        <Heading textAlign="center" my="1.rem">
+          Log in to Portal
+        </Heading>
+        <FormControl w="full">
+          <FormLabel>registration number</FormLabel>
 
-          handleChange={setPassword}
-          inputType={"password"}
-          placeholder="***********"
-
-          label={"registration Number"}
-        />
-        <FormControl>
-          <FormLabel textTransform="capitalize"> password</FormLabel>
-          <Input type="password" placeholder="password" p="10px" border="1.7px solid" borderRadius="10px"  />
+          <Input
+            placeholder="FAC/YEAR/DEPT/SN"
+            onChange={(e) => setRegNo(e.target.value)}
+            border="1.5px solid"
+            borderColor="green.500"
+            borderRadius="10px"
+            p="10px"
+            width="full"
+            type={"text"}
+          />
         </FormControl>
+        <FormControl w="full">
+          <FormLabel>registration number</FormLabel>
+
+          <Input
+            placeholder="************"
+            onChange={(e) => setPassword(e.target.value)}
+            border="1.5px solid"
+            borderColor="green.500"
+            borderRadius="10px"
+            p="10px"
+            width="full"
+            type={"password"}
+          />
+        </FormControl>
+
         <Button>Log in</Button>
       </Card>
     </Box>
