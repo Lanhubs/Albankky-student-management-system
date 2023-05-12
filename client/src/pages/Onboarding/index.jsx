@@ -21,16 +21,30 @@ const Enrol = () => {
   const [dateOfBirth, setDateOfBirth] = React.useState();
   const [fingerPrintId, setFingerPrintId] = React.useState();
   const [password, setPassword] = React.useState(false);
-  const handleEnrollment = () => {};
+  const handleEnrollment = () => {
+    const formData = new FormData();
+    const fullName = firstName + " " + lastName + " " + middleName;
+    formData.append("fullName", fullName);
+    formData.append("profilePic", profilePic);
+    formData.append("registrationNumber", regNo);
+    formData.append("dateOfBirth", dateOfBirth);
+    formData.append("fingerPrintId", fingerPrintId);
+    formData.append("password", password);
+
+    fetch("/api/enrol", {
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((data) => console.log(data))
+      .catch((e) => console.log(e));
+  };
   // React.useEffect(()=>{}, [])
   return (
     <Wrapper>
-
       <Box
         gap="7%"
         width={{ base: "90%", md: "60%" }}
-        height={{sm:"full", md:"100vh"}}
-       
+        height={{ sm: "full", md: "100vh" }}
         display={FLEX}
         my="20%"
         flexDirection={{ base: "column", md: "row" }}
@@ -39,20 +53,31 @@ const Enrol = () => {
         m="auto"
         margin="auto"
       >
-        
-        <Box width={{ sm: "full", md: "30%", lg: "35%" }}   display={"flex"} flexDir="column" gap="1rem">
+        <Box
+          width={{ sm: "full", md: "30%", lg: "35%" }}
+          display={"flex"}
+          flexDir="column"
+          gap="1rem"
+        >
           <Cus_File_Uploaf_Input handleChange={setProfilePic} />
           <FingerPrint_Grabber />
           <Button
             onClick={handleEnrollment}
-            
             className="custom-button sm:none base:none md:flex hover:bg-slate-100 rounded-base border-[1.5px] border-solid border-green-500  hover:"
           >
             Enrol now
           </Button>
         </Box>
 
-        <Box display={FLEX} flexDir="column" h="full" gap="1rem" flex={1} alignItems="center" justifyContent="center">
+        <Box
+          display={FLEX}
+          flexDir="column"
+          h="full"
+          gap="1rem"
+          flex={1}
+          alignItems="center"
+          justifyContent="center"
+        >
           {/* first name */}
           <Cus_Input
             placeholder={"first name"}
@@ -85,7 +110,7 @@ const Enrol = () => {
             label="registration number"
           />
 
-          <Password handleChange={setPassword} label="password"/>
+          <Password handleChange={setPassword} label="password" />
           {/* date of birth */}
           <Cus_Input
             placeholder={"Date of birth"}
@@ -101,7 +126,6 @@ const Enrol = () => {
             my="1rem"
             bg="blackAlpha.600"
             height="50px"
-
             color="white"
             fontSize={20}
             className="custom-button hover:bg-slate-100  base:flex md:none rounded-base border-[1.5px] border-solid border-green-500  hover:"

@@ -4,7 +4,6 @@ const coursesSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  // studentRegNo: [{ type: mongoose.Schema.Types.ObjectId, ref: "students" }],
 
   student: [{ type: mongoose.Schema.Types.ObjectId, ref: "students" }],
 });

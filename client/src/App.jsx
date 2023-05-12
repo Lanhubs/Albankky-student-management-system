@@ -10,22 +10,25 @@ import Enrol from "./pages/Onboarding";
 import { Login } from "./pages/Onboarding/Login";
 import { Global } from "@emotion/react";
 import { ChakraProvider } from "@chakra-ui/react";
+import AttendLecture from "./pages/Attendance";
 function App() {
   return (
-    <ChakraProvider >
-      {/* <Fonts/> */}
-    <BrowserRouter>
- 
-      <Routes>
-        <Route path="/" exact element={<Home />} />
-        <Route path="/enrol" exact element={<Enrol />} />
-        <Route path="/students" exact element={<Students />} />
-        <Route path="/login" exact element={<Login />} />
-
-
-      </Routes>
-    </BrowserRouter>
-  </ChakraProvider>
+    <ChakraProvider>
+      
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" exact element={<Home />} />
+          <Route path="/enrol" exact element={<Enrol />} />
+          <Route path="/students" exact element={<Students />} />
+          <Route path="/login" exact element={<Login />} />
+          <Route
+            path="/attend-class/:course"
+            exact
+            element={<AttendLecture />}
+          />
+        </Routes>
+      </BrowserRouter>
+    </ChakraProvider>
   );
 }
 

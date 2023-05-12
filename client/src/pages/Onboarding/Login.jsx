@@ -13,61 +13,63 @@ import { Cus_Input, Password } from "../../Components/Utils/Cus_Inputs";
 export const Login = () => {
   const [regNo, setRegNo] = React.useState();
   const [password, setPassword] = React.useState();
+  const handleLogIn = () => {
+    fetch("/api/login", {
+      body: JSON.stringify({ registrationNumber: regNo, password }),
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => console.log(data))
+      .catch((e) => console.log(e));
+  };
 
   return (
     <Box
       w="100vw"
       height={{ base: "100vh" }}
       display={FLEX}
+      flexDir="column"
       bg="#fff"
       alignItems="center"
       justifyContent="center"
     >
+    <Heading fontSize={30} my="10">
+      Albankky student management system
+    </Heading>
       <Card
-        width={{ base: "90%", lg: "50%" }}
-        p="2rem 1rem"
+        width={{ base: "90%", md: "35%" }}
+        px="2rem"
+        height={{sm:"70%", md: "45%"}}
+     
         d={FLEX}
         display={FLEX}
-        shadow="md"
-        padding="2rem 1rem"
+        boxShadow={"rgba(0, 0, 0, 0.6)"}
+        shadow="lg"
+        rounded="md"
         flexDir="column"
         bg="#fff"
         gap="1rem"
         background="#fff"
       >
-        <Heading textAlign="center" my="1.rem">
+        <Heading textAlign="center" my="1rem">
           Log in to Portal
         </Heading>
-        <FormControl w="full">
-          <FormLabel>registration number</FormLabel>
+        <Cus_Input
+          handleChange={setRegNo}
+          label="registration number"
+          placeholder="FAC/YEAR/DEPT/SN"
+          inputType={"text"}
+        />
+        <Cus_Input
+          handleChange={setPassword}
+          label="password"
+          placeholder="************"
+        />
 
-          <Input
-            placeholder="FAC/YEAR/DEPT/SN"
-            onChange={(e) => setRegNo(e.target.value)}
-            border="1.5px solid"
-            borderColor="green.500"
-            borderRadius="10px"
-            p="10px"
-            width="full"
-            type={"text"}
-          />
-        </FormControl>
-        <FormControl w="full">
-          <FormLabel>registration number</FormLabel>
-
-          <Input
-            placeholder="************"
-            onChange={(e) => setPassword(e.target.value)}
-            border="1.5px solid"
-            borderColor="green.500"
-            borderRadius="10px"
-            p="10px"
-            width="full"
-            type={"password"}
-          />
-        </FormControl>
-
-        <Button>Log in</Button>
+        <Button height="50px" my="1.5rem" bg="green.500">Log in</Button>
       </Card>
     </Box>
   );
