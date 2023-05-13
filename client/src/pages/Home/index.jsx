@@ -1,4 +1,4 @@
-import { Box, HStack, Stack, Text, Card } from "@chakra-ui/react";
+import { Box, HStack, Stack, Text, Card, Flex } from "@chakra-ui/react";
 import React from "react";
 import { MOCK_STUDENTS_DETAILS } from "../../Components/DATA";
 import Wrapper from "../../Components/Templates/Wrapper";
@@ -7,8 +7,8 @@ import { Cus_File_Uploaf_Input } from "../../Components/Utils/Cus_Inputs";
 const Home = () => {
   return (
     <Wrapper>
-      <Box w="full" m="1rem" p="2rem" ml="25%" bg="cyan.300" bgColor="cyan.300">
-        <HStack w="full" width="full" gap="3%">
+      <Box py="2rem">
+        <Flex  rowGap="1rem" flexWrap="wrap" columnGap={"1rem"}>
           {MOCK_STUDENTS_DETAILS.map((item, idx) => (
             <Box
               key={idx}
@@ -25,7 +25,7 @@ const Home = () => {
               <Text> {item.amount}</Text>
             </Box>
           ))}
-        </HStack>
+        </Flex>
       </Box>
     </Wrapper>
   );

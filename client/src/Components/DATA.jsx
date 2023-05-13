@@ -8,7 +8,7 @@ import {
 const SIDEBAR_DATA = [
   {
     title: "student enrollment",
-    link: "#",
+    link: "/enrol",
     icon: <FaUserPlus />,
   },
   {

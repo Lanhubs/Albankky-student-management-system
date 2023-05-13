@@ -47,7 +47,7 @@ const Sidebar = ({ children }) => {
               gap="1rem"
               p="1rem"
               key={idx}
-              to="#"
+              to={item.link}
               justifyContent="space-between"
               mx="1rem"
               as={Link}

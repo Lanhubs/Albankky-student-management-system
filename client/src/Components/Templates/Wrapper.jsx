@@ -15,17 +15,17 @@ const Wrapper = ({ children }) => {
         }}
       >
         <Sidebar />
-        {/*  <Box
+         <Box
           height="100%"
         
           overflowY={"hidden"}
-          ml={{ sm: 0, md: "290px" }}
+          ml={{ sm: 0, md: "310px" }}
+          bg="#f3f3f3"
           overflowX="hidden"
-          zIndex={100}
-        > */}
-        <div className="h-screen bg-[#fafafa] overflow-y-visible md:ml-[290px] sm:[ml-0] overflow-x-hidden z-[1000]">
+          
+        >
           {children}
-        </div>
+        </Box>
       </Box>
     </>
   );
