@@ -43,7 +43,7 @@ export const Cus_File_Uploaf_Input = ({ placeholder, handleChange }) => {
             height={"40px"}
             backgroundColor="gray.400"
             alignItems="center"
-            padding="10px"
+            // padding="10px"
             justifyContent="space-between"
           >
             <Text textTransform="capitalize">delete file</Text>
@@ -83,10 +83,10 @@ export const Cus_File_Uploaf_Input = ({ placeholder, handleChange }) => {
         borderColor={"cyan.600"}
         cursor="pointer"
         flexDir={"column"}
-        display={FLEX}
+        display={FLEX}w="full"
         alignItems="center"
         justifyContent="center"
-        height="100px"
+        height="150px"
         width="full"
       >
         <Input
@@ -113,8 +113,8 @@ export const Cus_File_Uploaf_Input = ({ placeholder, handleChange }) => {
           onFocus={() => {}}
           pos="relative"
         />
-        <Text color="cyan.500" as={MdOutlineCloudUpload} size={30} />
-        <Text>upload product image</Text>
+        <Text color="cyan.500" as={MdOutlineCloudUpload} fontSize={50} />
+        <Text textTransform="capitalize" fontSize={18}>upload product image</Text>
       </Box>
     </Box>
   );

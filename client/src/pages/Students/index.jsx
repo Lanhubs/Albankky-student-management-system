@@ -17,7 +17,7 @@ const Students = () => {
   return (
     <Wrapper>
       <Stack my="2rem" flexDirection="column" gap="1rem" mx="auto" w="90%">
-        <HStack bg="#fff" shadow="base" justfyContent="space-between">
+        <HStack bg="#fff" shadow="sm" justfyContent="space-between">
           <Text>profile picture</Text>
           <Text>Student name</Text>
           <Text>Reg No</Text>
@@ -26,7 +26,7 @@ const Students = () => {
           <Text>email</Text>
           <Text>finger print Id</Text>
         </HStack>
-        <HStack bg="#fff" shadow="base" justfyContent="space-between">
+        <HStack bg="#fff" shadow="sm" justfyContent="space-between">
           <Avatar w="60px" height="60px" />
           <Text>Muhammed habeeb Olanrewaju</Text>
         </HStack>

@@ -29,7 +29,7 @@ export const Login = () => {
   return (
     <Box
       w="100vw"
-      height={{ base: "100vh" }}
+      height={{ sm: "100vh" }}
       display={FLEX}
       flexDir="column"
       bg="#fff"
@@ -40,7 +40,7 @@ export const Login = () => {
       Albankky student management system
     </Heading>
       <Card
-        width={{ base: "90%", md: "35%" }}
+        width={{ sm: "90%", md: "35%" }}
         px="2rem"
         height={{sm:"70%", md: "45%"}}
      

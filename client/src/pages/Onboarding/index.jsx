@@ -41,20 +41,20 @@ const Enrol = () => {
   // React.useEffect(()=>{}, [])
   return (
     <Wrapper>
-      <Box
+      <Flex
         gap="7%"
-        width={{ base: "90%", md: "60%" }}
-        height={{ sm: "full", md: "100vh" }}
+        width={{ base: "100vw", md: "80%", lg: "60%" }}
+        height={{ base: "full", md: "100vh" }}
         display={FLEX}
         my="20%"
-        flexDirection={{ base: "column", md: "row" }}
+        flexDirection={{ base: "column-reverse", md: "column-reverse", lg: "row" }}
         alignItems="center"
-        padding="1rem"
+        padding={{ base: "5%", md: "1rem" }}
         m="auto"
         margin="auto"
       >
         <Box
-          width={{ sm: "full", md: "30%", lg: "35%" }}
+          width={{ base: "full", md: "full", lg: "35%" }}
           display={"flex"}
           flexDir="column"
           gap="1rem"
@@ -63,7 +63,12 @@ const Enrol = () => {
           <FingerPrint_Grabber />
           <Button
             onClick={handleEnrollment}
-            className="custom-button sm:none base:none md:flex hover:bg-slate-100 rounded-base border-[1.5px] border-solid border-green-500  hover:"
+            w="full"
+            my="1rem"
+            bg="blackAlpha.600"
+            height="50px"
+            color="white"
+            fontSize={20}
           >
             Enrol now
           </Button>
@@ -75,6 +80,7 @@ const Enrol = () => {
           h="full"
           gap="1rem"
           flex={1}
+          w="full"
           alignItems="center"
           justifyContent="center"
         >
@@ -118,22 +124,8 @@ const Enrol = () => {
             inputType={"text"}
             label="date of birth"
           />
-
-          <Button
-            onClick={handleEnrollment}
-            w="100%"
-            mx="1rem"
-            my="1rem"
-            bg="blackAlpha.600"
-            height="50px"
-            color="white"
-            fontSize={20}
-            className="custom-button hover:bg-slate-100  base:flex md:none rounded-base border-[1.5px] border-solid border-green-500  hover:"
-          >
-            Enrol now
-          </Button>
         </Box>
-      </Box>
+      </Flex>
     </Wrapper>
   );
 };

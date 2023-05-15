@@ -40,5 +40,5 @@ const MOCK_STUDENTS_DETAILS = [
   { dept: "300L", amount: 120, bgColor: "rgba(255, 0, 0, 0.3)" },
   { dept: "400L", amount: 125, bgColor: "rgba(0, 255, 250, 0.3)" },
 ];
-
+export const API_KEY ="wiYL19lefHaXzBnaeBAA"
 export { SIDEBAR_DATA, FLEX , MOCK_STUDENTS_DETAILS};

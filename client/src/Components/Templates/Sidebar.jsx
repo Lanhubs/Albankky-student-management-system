@@ -23,7 +23,7 @@ const Sidebar = ({ children }) => {
 
       <Box
         transition="2s ease"
-        width={{ sm: "full", md: "290px", lg: "290px" }}
+        width={{ base: showSideBar? "90%":0, md: "290px", lg: "290px" }}
         pos="fixed"
         zIndex={100}
         h="100vh"

@@ -19,7 +19,7 @@ const Wrapper = ({ children }) => {
           height="100%"
         
           overflowY={"hidden"}
-          ml={{ sm: 0, md: "310px" }}
+          ml={{ base: 0, md: "290px" }}
           bg="#f3f3f3"
           overflowX="hidden"
           
