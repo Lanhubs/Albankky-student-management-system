@@ -24,11 +24,12 @@ export const Login = () => {
   const handleLogIn = () => {
     if (password === "" || regNo === "") {
       toast({
-        description: "input fields cannot be empty",
+        title: "input fields cannot be empty",
         status: "error",
         duration: 3000,
         position: "top",
       });
+      console.log("input fields cannot be empty")
     }
     setSubmitting(true)
     fetch("/api/login", {
@@ -52,11 +53,14 @@ export const Login = () => {
           );
           navigate("/")
         }
+
       })
       .catch((e) => {
         console.log(e);
 
-      });
+      }).finally(()=>{
+        setSubmitting(false)
+      })
   };
 
   return (
@@ -69,7 +73,7 @@ export const Login = () => {
       alignItems="center"
       justifyContent="center"
     >
-      <Heading fontSize={30} my="10">
+      <Heading fontSize={30} my="10" mx="auto" textAlign="center">
         Albankky student management system
       </Heading>
       <ToastContainer />
@@ -79,8 +83,7 @@ export const Login = () => {
         height={{ base: "70%", md: "45%" }}
         d={FLEX}
         display={FLEX}
-        boxShadow={"rgba(0, 0, 0, 0.6)"}
-        shadow="lg"
+        shadow="md"
         rounded="md"
         flexDir="column"
         bg="#fff"
@@ -103,7 +106,7 @@ export const Login = () => {
           placeholder="************"
         />
 
-        <Button onCLick={handleLogIn} height="50px" my="1.5rem" bg="green.500">
+        <Button onClick={handleLogIn} height="50px" my="1.5rem" bg="green.500">
         {submitting ? (
           <Spinner/>
         ): "Log in"}

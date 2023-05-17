@@ -1,3 +1,4 @@
+require("dotenv").config()
 const express = require("express"),
   cors = require("cors"),
   app = express(),
@@ -12,5 +13,5 @@ app.use(express.static(__dirname + "public"));
 
 app.use("/api", routes);
 
-app.listen(3030, console.log("connected to port:", 3030));
+app.listen(process.env.PORT||3030, console.log("connected to port:", 3030));
 

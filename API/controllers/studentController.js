@@ -20,8 +20,23 @@ const getStudentController = async (req, res) => {
     return res.json({ error, status: 4000 });
   }
 };
-const editMyDetailsController=(req, res)=>{
+const editMyDetailsController= async (req, res)=>{
+  try{
+    const user = req.user;
+    if ((user.role.includes("student"))) {
+      const docs = await usersModel
+        .findByIdAndUpdate({_id: user._id})
+        .populate("courses")
+        .select("-password")
+        .lean()
+      const coursesRegistered = await models.coursesModel.find({
+        $in: {_id:docs.courses}
+      }).lean()
+      return res.json({data: {docs, ...coursesRegistered}, status: 2000 });
+    }
+  }catch(e){
 
+  }
 }
 
 module.exports = { getStudentController, editMyDetailsController};

@@ -70,7 +70,7 @@ const loginController = async (req, res) => {
       }
     }
   } catch (error) {
-    return res.status(405).send({ msg: error, status: 4000 });
+    return res.status(405).json({ msg: error, status: 4000 });
   }
 };
 module.exports = { signUpController, loginController };
