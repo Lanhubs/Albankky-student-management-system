@@ -3,36 +3,36 @@ const studentSchema = mongoose.Schema({
   fullName: {
     type: String,
     required: [true, "Full name is compulsory"],
-    allowNull: false,
+    allowNull: true,
   },
   password: {
     type: String,
     required: [true, "password field is compulsory"],
     allowNull: false,
-    select: false,
+    
   },
   email: {
     type: String,
     required: [true, "email is compulsory"],
-    allowNull: false,
+    allowNull: true,
   },
   dateOfBirth: {
     type: String,
     required: [true, "date of birth is compulsory"],
-    allowNull: false,
+    allowNull: true,
   },
   fingerPrintId: {
     type: String,
-    required: false,
+    required: true,
   },
   profilePic: {
     type: String,
-    required: false,
+    required: true,
   },
   courses: [{ type: mongoose.Schema.Types.ObjectId, ref: "courses" }],
   registrationNumber: {
     type: String,
-    required: false,
+    required: true,
     unique: [true, "registration number already in use"],
   },
 /*   verified: {

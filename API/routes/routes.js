@@ -14,12 +14,12 @@ const {
 const { setAdminController } = require("../controllers/setAdmin")
 
 routes.get("/", getStudentController)
-routes.post("/enrol-student", middleware.upload.single("profilePic"), signUpController)
+routes.post("/enrol", middleware.upload.single("profilePic"), signUpController)
 routes.post("/login", loginController)
 
 
 routes.post("/get-students", middleware.authToken, getStudentsController)
-routes.post("/get-student", middleware.authToken, getStudentController)
+routes.get("/get-student", middleware.authToken, getStudentController)
 routes.post("/get-student", middleware.authToken, editMyDetailsController)
 routes.post("/set-admin", setAdminController)
 

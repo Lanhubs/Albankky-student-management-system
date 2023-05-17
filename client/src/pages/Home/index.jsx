@@ -2,7 +2,7 @@ import { Box, HStack, Stack, Text, Card, Flex } from "@chakra-ui/react";
 import React from "react";
 import { FLEX, MOCK_STUDENTS_DETAILS } from "../../Components/DATA";
 import Wrapper from "../../Components/Templates/Wrapper";
-import { Cus_File_Uploaf_Input } from "../../Components/Utils/Cus_Inputs";
+import { Cus_File_Upload_Input } from "../../Components/Utils/Cus_Inputs";
 
 const Home = () => {
   return (

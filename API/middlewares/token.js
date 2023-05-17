@@ -1,6 +1,8 @@
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 // generate token
+const usersModel = require("../models/mongoDB_model/usersModel");
+
 const generateToken = (details) =>
   jwt.sign({ user: details }, process.env.ALBANKKY_SYS_M_TOKEN, {
     expiresIn: "3d",
@@ -18,8 +20,9 @@ const authToken = async (req, res, next) => {
     token = req.headers.authorization.split(" ")[1];
     const decodedToken = jwt.verify(token, process.env.ALBANKKY_SYS_M_TOKEN);
     req.user = await usersModel.findOne({
-      where: { id: decodedToken.user.id },
+      where: { _id: decodedToken.user.id },
     });
+    console.log(req.user, decodeToken)
     next();
   } else {
     res.status(401).send("unautorized or invalid token");

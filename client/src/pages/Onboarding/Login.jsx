@@ -6,14 +6,31 @@ import {
   Input,
   FormControl,
   FormLabel,
+  createStandaloneToast,
+  cookieStorageManager,
+  Spinner,
 } from "@chakra-ui/react";
 import React from "react";
 import { FLEX } from "../../Components/DATA";
 import { Cus_Input, Password } from "../../Components/Utils/Cus_Inputs";
+import Cookie from "js-cookie";
+import {useNavigate} from "react-router-dom"
 export const Login = () => {
   const [regNo, setRegNo] = React.useState();
   const [password, setPassword] = React.useState();
+  const [submitting, setSubmitting] = React.useState(false)
+  const { toast, ToastContainer } = createStandaloneToast();
+  const navigate = useNavigate()
   const handleLogIn = () => {
+    if (password === "" || regNo === "") {
+      toast({
+        description: "input fields cannot be empty",
+        status: "error",
+        duration: 3000,
+        position: "top",
+      });
+    }
+    setSubmitting(true)
     fetch("/api/login", {
       body: JSON.stringify({ registrationNumber: regNo, password }),
       method: "POST",
@@ -22,28 +39,44 @@ export const Login = () => {
       },
     })
       .then((res) => res.json())
-      .then((data) => console.log(data))
-      .catch((e) => console.log(e));
+      .then((data) => {
+        if (data) {
+          console.log(data)
+          Cookie.set(
+            "albankky-student-management-system",
+            JSON.stringify(data),
+            {
+              expires: 3,
+              sameSite: "strict",
+            }
+          );
+          navigate("/")
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+
+      });
   };
 
   return (
     <Box
       w="100vw"
-      height={{ sm: "100vh" }}
+      height={{ base: "100vh" }}
       display={FLEX}
       flexDir="column"
-      bg="#fff"
+      bg="#fafafa"
       alignItems="center"
       justifyContent="center"
     >
-    <Heading fontSize={30} my="10">
-      Albankky student management system
-    </Heading>
+      <Heading fontSize={30} my="10">
+        Albankky student management system
+      </Heading>
+      <ToastContainer />
       <Card
-        width={{ sm: "90%", md: "35%" }}
+        width={{ base: "90%", md: "60%", lg: "35%"}}
         px="2rem"
-        height={{sm:"70%", md: "45%"}}
-     
+        height={{ base: "70%", md: "45%" }}
         d={FLEX}
         display={FLEX}
         boxShadow={"rgba(0, 0, 0, 0.6)"}
@@ -63,13 +96,18 @@ export const Login = () => {
           placeholder="FAC/YEAR/DEPT/SN"
           inputType={"text"}
         />
-        <Cus_Input
+        <Password
           handleChange={setPassword}
           label="password"
+          inputType={"password"}
           placeholder="************"
         />
 
-        <Button height="50px" my="1.5rem" bg="green.500">Log in</Button>
+        <Button onCLick={handleLogIn} height="50px" my="1.5rem" bg="green.500">
+        {submitting ? (
+          <Spinner/>
+        ): "Log in"}
+        </Button>
       </Card>
     </Box>
   );

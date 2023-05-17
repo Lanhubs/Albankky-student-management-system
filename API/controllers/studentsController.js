@@ -41,7 +41,7 @@ const editStudentDetailsController = async (req, res)=>{
     
     if ((user.role.includes("admin"))) {
   
-      const docs = await models.usersModel.findByIdAndDelete({_id: student}).populate("courses")
+      const docs = await models.usersModel.findByIdAndUpdate({_id: student}).populate("courses")
       if(docs){
         res.send({msg: "successfully removed student", status: 2000})
   

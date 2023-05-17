@@ -6,7 +6,7 @@ const express = require("express"),
 
 app.use(cors());
 app.use(express.json()) 
-// app.use(express.urlencoded({extended: false}))
+app.use(express.urlencoded({extended: false}))
 // app.use(fileupload())
 app.use(express.static(__dirname + "public"));
 

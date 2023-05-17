@@ -21,7 +21,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 import { FLEX } from "../DATA";
 
-export const Cus_File_Uploaf_Input = ({ placeholder, handleChange }) => {
+export const Cus_File_Upload_Input = ({ placeholder, handleChange }) => {
   const imageUploadRef = useRef();
   const [imageName, setImageName] = React.useState();
   const [image, setImage] = React.useState();
@@ -74,7 +74,7 @@ export const Cus_File_Uploaf_Input = ({ placeholder, handleChange }) => {
         </>
       )}
       <Box
-        onClick={(event) => {
+        onClick={() => {
           document.getElementById("fileupload").click();
         }}
         marginTop="1rem"
@@ -83,7 +83,8 @@ export const Cus_File_Uploaf_Input = ({ placeholder, handleChange }) => {
         borderColor={"cyan.600"}
         cursor="pointer"
         flexDir={"column"}
-        display={FLEX}w="full"
+        display={FLEX}
+        w="full"
         alignItems="center"
         justifyContent="center"
         height="150px"
@@ -114,7 +115,9 @@ export const Cus_File_Uploaf_Input = ({ placeholder, handleChange }) => {
           pos="relative"
         />
         <Text color="cyan.500" as={MdOutlineCloudUpload} fontSize={50} />
-        <Text textTransform="capitalize" fontSize={18}>upload product image</Text>
+        <Text textTransform="capitalize" fontSize={18}>
+          upload product image
+        </Text>
       </Box>
     </Box>
   );
@@ -122,7 +125,9 @@ export const Cus_File_Uploaf_Input = ({ placeholder, handleChange }) => {
 export const Cus_Input = ({ placeholder, label, inputType, handleChange }) => {
   return (
     <FormControl flexDir="col" w="full">
-      <FormLabel textTransform="capitalize" fontSize={16}>{label}</FormLabel>
+      <FormLabel textTransform="capitalize" fontSize={16}>
+        {label}
+      </FormLabel>
 
       <Input
         placeholder={placeholder}
@@ -142,7 +147,9 @@ export const Password = ({ placeholder, label, inputType, handleChange }) => {
   const [pwdVisibility, setPwdVisibility] = React.useState(false);
   return (
     <FormControl w="full">
-      <FormLabel textTransform="capitalize" fontSize={18}>{label}</FormLabel>
+      <FormLabel textTransform="capitalize" fontSize={18}>
+        {label}
+      </FormLabel>
 
       <InputGroup
         rounded={"md"}
@@ -173,15 +180,10 @@ export const Password = ({ placeholder, label, inputType, handleChange }) => {
     </FormControl>
   );
 };
-export const Cus_Select = () => {
+export const Cus_Select = (props) => {
   const selector = useRef();
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const [courses, setCourses] = React.useState();
-  selector.current.click(() => {
-    setCourses((value) => {
-      value += selector.current.textContent;
-    });
-  });
+  const [showCourses, setShowCourses] = React.useState(false);
+
   const options = [
     "Math",
     "Computer Science",
@@ -193,37 +195,62 @@ export const Cus_Select = () => {
     "structural programming",
     "functional programming",
   ];
+  React.useEffect(() => {
+    console.log(props.courses);
+  }, [props.courses]);
   return (
     <>
-      <FormControl>
-        <FormLabel>choose courses</FormLabel>
+      <Box
+        w="full"
+        pos="relative"
+        onMouseOut={() => setShowCourses(false)}
+        onMouseLeave={() => setShowCourses(false)}
+      >
+        <FormLabel fontSize="18px" textTransform="capitalize">
+          choose courses
+        </FormLabel>
         <Input
-          value={courses}
-          onFocus={isOpen}
+          border="1.7px solid"
+          borderColor="green.500"
           w="full"
+          cursor="pointer"
+          height="50px"
           placeholder="courses"
-          onChange={(e) => setCourses(e.target.value)}
+          value={props.courses}
+          onMouseOut={() => setShowCourses(false)}
+          onMouseLeave={() => setShowCourses(false)}
+          onChange={(e) => props.setCourses(e.target.value)}
+          onFocus={() => setShowCourses(true)}
         />
-      </FormControl>
-      <Menu onOpen={onOpen} onClose={onClose} placement="bottom">
-        <MenuList>
-          {options.map((item, idx) => (
-            <MenuItem
-              ref={selector}
+        <Box
+          w="full"
+          m={0}
+          p={0}
+          pos="absolute"
+          display={showCourses ? FLEX : "none"}
+          top="5rem"
+          zIndex={100}
+          bg="#fff"
+          flexDir="column"
+          my="10px"
+          overflowY={"visible"}
+          rounded="sm"
+        >
+          {options.map((item) => (
+            <Box
+              key={item}
+              cursor="pointer"
               p="10px"
-              onClick={(e) => {
-                setCourses((value) => {
-                  value += "," + e.currentTarget.textContent;
-                });
-                // onClose()
+              w="full"
+              onClick={() => {
+                props.setCourses((oldData) => (oldData += "," + item));
               }}
-              key={idx}
             >
               {item}
-            </MenuItem>
+            </Box>
           ))}
-        </MenuList>
-      </Menu>
+        </Box>
+      </Box>
     </>
   );
 };

@@ -9,12 +9,11 @@ import { MdFingerprint, MdOutlineFingerprint } from "react-icons/md";
 import { FLEX } from "../DATA";
 
 const FingerPrint_Grabber = ({ setFingerPrintId }) => {
-  const [fingerPrintImage, setFingerPrintImage] = React.useState();
   const [fingerP, setFingerP] = React.useState();
 
   const { isLoading, error, data } = useVisitorData();
   const handleScan = async () => {
-    setIsScanning(true);
+    // set(true);
     try {
       setFingerP(data.visitorFound && data.visitorId);
       setFingerPrintId(data.visitorFound && data.visitorId);
@@ -22,9 +21,6 @@ const FingerPrint_Grabber = ({ setFingerPrintId }) => {
       console.log(error);
     }
   };
-  React.useEffect(() => {
-    // console.log(JSON.stringify(data));
-  }, []);
 
   return (
     <Box w="full" py="1rem">
@@ -37,15 +33,11 @@ const FingerPrint_Grabber = ({ setFingerPrintId }) => {
         border="1.7px solid"
         borderColor="green.500"
       >
-        {error ? (
-          <Text m="auto" color={fingerP ? "red.500" : "blackAlpha.600"}>
-            <MdOutlineFingerprint fontSize={50} />
-          </Text>
-        ) : (
+        
           <Text m="auto" color={fingerP ? "green.400" : "blackAlpha.600"}>
             {isLoading ? <Spinner /> : <MdFingerprint fontSize={50} />}
           </Text>
-        )}
+      
       </Box>
       <Button
         onClick={handleScan}

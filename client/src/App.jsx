@@ -19,7 +19,15 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" exact element={<Home />} />
-            <Route path="/enrol" exact element={<Enrol />} />
+            <Route path="/enrol" exact element={
+            <Wrapper>
+              <Enrol />
+            </Wrapper>
+            
+            
+            } />
+            <Route path="/signup" exact element={<Enrol />} />
+
             <Route path="/students" exact element={<Students />} />
             <Route path="/login" exact element={<Login />} />
             <Route

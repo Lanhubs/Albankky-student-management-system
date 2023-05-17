@@ -3,7 +3,9 @@ import {
   FaUserPlus,
   FaUsers,
   FaUserEdit,
+  FaRegUser,
 } from "react-icons/fa";
+import { MdMenuBook } from "react-icons/md";
 
 const SIDEBAR_DATA = [
   {
@@ -30,7 +32,9 @@ const SIDEBAR_DATA = [
   {
     title: "course info",
     link: "",
+    icon: <MdMenuBook/>
   },
+  { title: "profile", link: "/profile", icon : <FaRegUser/> },
 ];
 const FLEX =
   "flex" || "-ms-flex" || "flexbox" || "-webkit-flexbox" || "-webkit-flex";
@@ -40,5 +44,5 @@ const MOCK_STUDENTS_DETAILS = [
   { dept: "300L", amount: 120, bgColor: "rgba(255, 0, 0, 0.3)" },
   { dept: "400L", amount: 125, bgColor: "rgba(0, 255, 250, 0.3)" },
 ];
-export const API_KEY ="wiYL19lefHaXzBnaeBAA"
-export { SIDEBAR_DATA, FLEX , MOCK_STUDENTS_DETAILS};
+export const API_KEY = "wiYL19lefHaXzBnaeBAA";
+export { SIDEBAR_DATA, FLEX, MOCK_STUDENTS_DETAILS };

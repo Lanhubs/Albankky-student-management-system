@@ -22,29 +22,28 @@ const signUpController = async (req, res) => {
     });
 
     const courses = user.courses.split(",");
-    console.log(courses);
+
     let Courses = [];
 
-    courses.map((item) => {
+    await courses.map((item) => {
       Courses.push({
         courseName: item,
         student: docs._id,
       });
     });
     var dep_courses = await coursesModel.insertMany(Courses);
-    dep_courses.map(  data => {
+    dep_courses.map((data) => {
       docs.courses.push(data._id);
-    })
-    
+    });
+
     await docs.save();
-    
-   
+
     return res.send({
       data: docs,
       status: 2000,
+      token: generateToken({ _id: docs._id, role: docs.roles }),
       msg: "You've successfully enrolled",
     });
-   
   } catch (error) {
     if (error) {
       return res.status(405).send({ msg: error, status: 4000 });
@@ -54,18 +53,18 @@ const signUpController = async (req, res) => {
 const loginController = async (req, res) => {
   const { password, registrationNumber } = req.body;
   try {
-    const user = await usersModel
-      .findOne({ registrationNumber }, { password: 1 })
-      .lean();
+    const user = await usersModel.findOne({ registrationNumber }).lean()
+
     if (user) {
       const pwd = await bcrypt.compare(password, user.password);
       if (pwd) {
-        const { password, ...rest } = user;
-
+        const {password, ...rest} = user
+        
+        
         return res.json({
-          ...rest,
+          data: rest,
           msg: "successfully logged in",
-          token: generateToken({ _id: rest._id, role: rest.role }),
+          token: generateToken({ _id: rest._id, role: rest.roles }),
           status: 2000,
         });
       }
