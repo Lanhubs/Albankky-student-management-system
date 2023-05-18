@@ -1,3 +1,4 @@
+const { handleErrorMsg } = require("../middlewares/errorHandler");
 const usersModel = require("../models/mongoDB_model/usersModel");
 const bcrypt = require("bcryptjs");
 exports.setAdminController = async (req, res) => {
@@ -33,7 +34,7 @@ exports.setAdminController = async (req, res) => {
       res.send({ md: "created the admin", user });
     }
   } catch (e) {
-    res.status(404).send({ msg: e });
+    res.status(404).send({ msg: handleErrorMsg(e) });
     console.log(e);
   }
 };

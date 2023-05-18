@@ -3,7 +3,7 @@ const studentSchema = mongoose.Schema({
   fullName: {
     type: String,
     required: [true, "Full name is compulsory"],
-    allowNull: true,
+    allowNull: false,
   },
   password: {
     type: String,
@@ -23,16 +23,16 @@ const studentSchema = mongoose.Schema({
   },
   fingerPrintId: {
     type: String,
-    required: true,
+    required: [true, "you fingerprint is required"],
   },
   profilePic: {
     type: String,
-    required: true,
+    required: [true, "profile picture of yourself is required"],
   },
   courses: [{ type: mongoose.Schema.Types.ObjectId, ref: "courses" }],
   registrationNumber: {
     type: String,
-    required: true,
+    required: [true, "registration number is required"],
     unique: [true, "registration number already in use"],
   },
 /*   verified: {
@@ -47,7 +47,7 @@ const studentSchema = mongoose.Schema({
         enum: ["student", "admin"],
       },
     ],
-    required: false,
+   
     default: ["student"],
   },
 });

@@ -1,3 +1,4 @@
+const { handleErrorMsg } = require("../middlewares/errorHandler");
 const models = require("../models/mongoDB_model");
 const usersModel = require("../models/mongoDB_model/usersModel");
 
@@ -17,7 +18,7 @@ const getStudentController = async (req, res) => {
       return res.json({data: {docs, ...coursesRegistered}, status: 2000 });
     }
   } catch (error) {
-    return res.json({ error, status: 4000 });
+    return res.json({ msg:handleErrorMsg(error), status: 4000 });
   }
 };
 const editMyDetailsController= async (req, res)=>{

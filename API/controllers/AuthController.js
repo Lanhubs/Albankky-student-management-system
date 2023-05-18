@@ -3,6 +3,7 @@ const coursesModel = require("../models/mongoDB_model/coursesModel");
 const bcrypt = require("bcrypt");
 const { generateToken } = require("../middlewares");
 const { object_null_type_converter } = require("../middlewares/token");
+const { handleErrorMsg } = require("../middlewares/errorHandler");
 require("dotenv").config();
 const signUpController = async (req, res) => {
   try {
@@ -46,7 +47,7 @@ const signUpController = async (req, res) => {
     });
   } catch (error) {
     if (error) {
-      return res.status(405).send({ msg: error, status: 4000 });
+      return res.status(405).send({ msg: handleErrorMsg(error), status: 4000 });
     }
   }
 };
@@ -70,7 +71,7 @@ const loginController = async (req, res) => {
       }
     }
   } catch (error) {
-    return res.status(405).json({ msg: error, status: 4000 });
+    return res.status(405).json({ msg: handleErrorMsg(error), status: 4000 });
   }
 };
 module.exports = { signUpController, loginController };

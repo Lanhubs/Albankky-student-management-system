@@ -1,3 +1,4 @@
+const { handleErrorMsg } = require("../middlewares/errorHandler");
 const models = require("../models/mongoDB_model");
 require("dotenv").config();
 
@@ -14,7 +15,7 @@ const getStudentsController = async (req, res) => {
       return res.json({ ...docs, status: 2000 });
     }
   } catch (error) {
-    return res.json({ error, status: 4000 });
+    return res.json({ msg: handleErrorMsg(error), status: 4000 });
   }
 };
 const removeStudentController = async (req, res) => {
