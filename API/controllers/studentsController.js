@@ -5,7 +5,7 @@ require("dotenv").config();
 const getStudentsController = async (req, res) => {
   try {
     const user = req.user;
-    if (user.role.includes("admin")) {
+    if (user.roles.includes("admin")) {
       const docs = await models.usersModel
         .find({ "roles.admin": { $ne: true } })
         .populate("courses")

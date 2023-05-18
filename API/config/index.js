@@ -1,0 +1,1 @@
+exports.SECRET_TOKEN= "albankky-student-management-system"

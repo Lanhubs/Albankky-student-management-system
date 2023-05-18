@@ -40,6 +40,10 @@ const studentSchema = mongoose.Schema({
     required: true
     default: false,
   }, */
+  department:{
+    type: String,
+    required: [true, "department must be selected"]
+  },
   roles: {
     type: [
       {

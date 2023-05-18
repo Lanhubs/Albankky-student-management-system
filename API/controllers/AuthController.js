@@ -8,7 +8,7 @@ require("dotenv").config();
 const signUpController = async (req, res) => {
   try {
     const user = object_null_type_converter(req.body);
-    const profilePic = req.file.path.replace("\\", "/");
+    const profilePic = req.file.path.replaceAll("\\", "/");
     const hashedPwd = await bcrypt.hash(user.password, 20);
     const docs = new usersModel({
       fullName: user.fullName,
@@ -42,7 +42,7 @@ const signUpController = async (req, res) => {
     return res.send({
       data: docs,
       status: 2000,
-      token: generateToken({ _id: docs._id, role: docs.roles }),
+      token: generateToken(docs._id, docs.roles ),
       msg: "You've successfully enrolled",
     });
   } catch (error) {
@@ -54,18 +54,17 @@ const signUpController = async (req, res) => {
 const loginController = async (req, res) => {
   const { password, registrationNumber } = req.body;
   try {
-    const user = await usersModel.findOne({ registrationNumber }).lean()
+    const user = await usersModel.findOne({ registrationNumber }).lean();
 
     if (user) {
       const pwd = await bcrypt.compare(password, user.password);
       if (pwd) {
-        const {password, ...rest} = user
-        
-        
+        const { password, ...rest } = user;
+
         return res.json({
           data: rest,
           msg: "successfully logged in",
-          token: generateToken({ _id: rest._id, role: rest.roles }),
+          token: generateToken( rest._id, rest.roles),
           status: 2000,
         });
       }

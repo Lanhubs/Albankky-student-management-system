@@ -1,15 +1,19 @@
 const mongoose = require("./connection");
 const attendanceSchema = {
-  course: { type: mongoose.Schema.Types.ObjectId, ref: "courses" },
+  course:{
+    type: String,
+  },
   student: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "students",
   },
-
-  status: {
+  date: {
+    type: Date,
+    default: Date.now
+  },
+  present: {
     type: Boolean,
     required: true,
-
     default: false,
   },
 };
