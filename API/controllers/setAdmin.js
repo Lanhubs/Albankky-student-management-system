@@ -1,10 +1,10 @@
 const { handleErrorMsg } = require("../middlewares/errorHandler");
 const { object_null_type_converter } = require("../middlewares/token");
 const usersModel = require("../models/mongoDB_model/usersModel");
-const bcrypt = require("bcryptjs");
+const bcrypt = require("bcrypt");
 exports.setAdminController = async (req, res) => {
-  const body = //object_null_type_converter(req.body)
-  console.log(body, req.body)
+  const body =object_null_type_converter(req.body)
+  console.log( body)
   
   try {
     const hashedPwd = await bcrypt.hash(body.password, 30);

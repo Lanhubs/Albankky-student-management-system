@@ -30,7 +30,7 @@ const SIDEBAR_DATA = [
     link: "",
     icon: <MdMenuBook/>
   },
-  { title: "profile", link: "/profile", icon : <FaRegUser/> },
+  { title: "profile", link: "/", icon : <FaRegUser/> },
 ];
 const FLEX =
   "flex" || "-ms-flex" || "flexbox" || "-webkit-flexbox" || "-webkit-flex";

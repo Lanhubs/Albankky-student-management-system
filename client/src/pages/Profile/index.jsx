@@ -36,6 +36,7 @@ const index = () => {
         console.log(e);
       });
   }, []);
+  console.log(details)
   return (
     <Stack w="full" height={{ base: "full", md: "100vh" }} gap="1rem">
       <Card
@@ -80,7 +81,7 @@ const index = () => {
             <HStack key={idx} bg="#fff" shadow="md" rounded="md" p="10px" justifyContent={"space-between"}>
               <Text textTransform="capitalize">{item.courseName}</Text>
               <Text></Text>
-              <Link as={NavLink} to={`/${item.courseName}`} p="10px" bg="green.500" rounded="md">
+              <Link as={NavLink} to={`/attend-class/${item.courseName}`} p="10px" bg="green.500" rounded="md">
                 <FaAnchor fontSize={20}/>
               </Link>
             </HStack>

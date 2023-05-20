@@ -2,12 +2,12 @@ const mongoose = require("./connection");
 const studentSchema = mongoose.Schema({
   fullName: {
     type: String,
-    required: [true, "Full name is compulsory"],
+    // required: [true, "Full name is compulsory"],
     allowNull: false,
   },
   password: {
     type: String,
-    required: [true, "password field is compulsory"],
+    // required: [true, "password field is compulsory"],
     allowNull: false,
     
   },
@@ -18,21 +18,21 @@ const studentSchema = mongoose.Schema({
   },
   dateOfBirth: {
     type: String,
-    required: [true, "date of birth is compulsory"],
+    // required: [true, "date of birth is compulsory"],
     allowNull: true,
   },
   fingerPrintId: {
     type: String,
-    required: [true, "you fingerprint is required"],
+    // required: [true, "you fingerprint is required"],
   },
   profilePic: {
     type: String,
-    required: [true, "profile picture of yourself is required"],
+    // required: [true, "profile picture of yourself is required"],
   },
   courses: [{ type: mongoose.Schema.Types.ObjectId, ref: "courses", required: false }],
   registrationNumber: {
     type: String,
-    required: [true, "registration number is required"],
+    // required: [true, "registration number is required"],
     unique: [true, "registration number already in use"],
   },
 /*   verified: {

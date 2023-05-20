@@ -40,10 +40,10 @@ export const Login = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data) {
-          console.log(data);
           toast({
             description: data.msg,
             status: "success",
+
             position: "top-right",
             duration: 3000,
             isClosable: true,
