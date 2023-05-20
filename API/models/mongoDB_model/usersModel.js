@@ -29,7 +29,7 @@ const studentSchema = mongoose.Schema({
     type: String,
     required: [true, "profile picture of yourself is required"],
   },
-  courses: [{ type: mongoose.Schema.Types.ObjectId, ref: "courses" }],
+  courses: [{ type: mongoose.Schema.Types.ObjectId, ref: "courses", required: false }],
   registrationNumber: {
     type: String,
     required: [true, "registration number is required"],

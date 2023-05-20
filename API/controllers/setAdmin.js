@@ -1,34 +1,26 @@
 const { handleErrorMsg } = require("../middlewares/errorHandler");
+const { object_null_type_converter } = require("../middlewares/token");
 const usersModel = require("../models/mongoDB_model/usersModel");
 const bcrypt = require("bcryptjs");
 exports.setAdminController = async (req, res) => {
-  const body = {
-    fullName: "Abdul-Rasheed Banke",
-    password: "albankky@gmail.com",
-    email: "albankky@gmail.com",
-    dateOfBirth: "20/12/1996",
-    fingerPrintId: "1990000",
-    // profilePic: ,
-    // finger_Print:,
-    courses: "",
-    registrationNumber: "",
-    roles: "admin",
-  };
+  const body = //object_null_type_converter(req.body)
+  console.log(body, req.body)
+  
   try {
-    // const hashedPwd = await bcrypt.hash(body.password, 30);
-    // console.log(ha)
+    const hashedPwd = await bcrypt.hash(body.password, 30);
+    console.log(hashedPwd)
     const user = new usersModel({
       fullName: body.fullName,
       email: body.email,
       dateOfBirth: body.dateOfBirth,
       fingerPrintId: body.fingerPrintId,
       courses: "",
-      registrationNumber: "",
-      roles: body.roles,
-      password: body.password,
+      registrationNumber: body.registrationNumber,
+      roles: "admin",
+      password: hashedPwd,
     });
     if (user) {
-      console.log(user);
+      
       await user.save();
 
       res.send({ md: "created the admin", user });

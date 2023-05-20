@@ -29,6 +29,7 @@ export const Cus_File_Upload_Input = ({ placeholder, handleChange }) => {
     <Box pos="relative">
       <Text
         fontSize={16}
+        
         textTransform="capitalize"
         fontWeight={"500"}
         color="rgba(0, 0, 0, 0.7)"
@@ -43,7 +44,7 @@ export const Cus_File_Upload_Input = ({ placeholder, handleChange }) => {
             height={"40px"}
             backgroundColor="gray.400"
             alignItems="center"
-            // padding="10px"
+            padding="10px"
             justifyContent="space-between"
           >
             <Text textTransform="capitalize">delete file</Text>
@@ -167,13 +168,14 @@ export const Password = ({ placeholder, label, inputType, handleChange }) => {
         />
         <Button
           width="10%"
+          fontSize={30}
           className=" hover:bg-transparent"
           onClick={() => setPwdVisibility(!pwdVisibility)}
         >
           {pwdVisibility ? (
-            <FaEye fontSize={20} />
+            <FaEye fontSize={30} />
           ) : (
-            <FaEyeSlash fontSize={20} />
+            <FaEyeSlash fontSize={30} />
           )}
         </Button>
       </InputGroup>
@@ -244,6 +246,65 @@ export const Cus_Select = (props) => {
               w="full"
               onClick={() => {
                 props.setCourses((oldData) => (oldData += "," + item));
+              }}
+            >
+              {item}
+            </Box>
+          ))}
+        </Box>
+      </Box>
+    </>
+  );
+};
+export const Cus_Select_Dept = (props) => {
+  const [showDepts, setShowDepts] = React.useState(false);
+
+  return (
+    <>
+      <Box
+        w="full"
+        pos="relative"
+        onMouseOut={() => setShowDepts(false)}
+        onMouseLeave={() => setShowDepts(false)}
+      >
+        <FormLabel fontSize="18px" textTransform="capitalize">
+         {props.placeholder}
+        </FormLabel>
+        <Input
+          border="1.7px solid"
+          borderColor="green.500"
+          w="full"
+          cursor="pointer"
+          height="50px"
+          placeholder="courses"
+          value={props.department}
+          onMouseOut={() => setShowDepts(false)}
+          onMouseLeave={() => setShowDepts(false)}
+          onChange={(e) => props.setDepartment(e.target.value)}
+          onFocus={() => setShowDepts(true)}
+        />
+        <Box
+          w="full"
+          m={0}
+          p={0}
+          pos="absolute"
+          display={showDepts ? FLEX : "none"}
+          top="5rem"
+          zIndex={100}
+          bg="#fff"
+          flexDir="column"
+          my="10px"
+          overflowY={"visible"}
+          rounded="sm"
+        >
+          {props.depts.map((item) => (
+            <Box
+              key={item}
+              cursor="pointer"
+              p="10px"
+              w="full"
+              onClick={() => {
+                props.setDepartment(item);
               }}
             >
               {item}

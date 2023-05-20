@@ -7,6 +7,7 @@ import Header from "../Utils/Header";
 import UserProvider from "./UserProvider";
 
 const Wrapper = ({ children }) => {
+  const [showSideBar, setShowSideBar] = React.useState(false)
   return (
     <>
       <UserProvider>
@@ -17,7 +18,7 @@ const Wrapper = ({ children }) => {
             backgroundColor: " #FAFAFA",
           }}
         >
-          <Sidebar />
+          <Sidebar showSideBar={showSideBar} setShowSideBar={setShowSideBar}/>
           <Box
             height="100%"
             overflowY={"hidden"}
@@ -25,7 +26,7 @@ const Wrapper = ({ children }) => {
             bg="#f3f3f3"
             overflowX="hidden"
           >
-            <Header />
+            <Header setShowSideBar={setShowSideBar}/>
             {children}
           </Box>
         </Box>

@@ -8,7 +8,13 @@ require("dotenv").config();
 const signUpController = async (req, res) => {
   try {
     const user = object_null_type_converter(req.body);
-    const profilePic = req.file.path.replaceAll("\\", "/");
+    var { password, fingerPrintId, ...rest } = object_null_type_converter(
+      req.body
+    );
+
+    const profilePic = req.file.path
+      .replaceAll("\\", "/")
+      .replace("public", "");
     const hashedPwd = await bcrypt.hash(user.password, 20);
     const docs = new usersModel({
       fullName: user.fullName,
@@ -19,6 +25,7 @@ const signUpController = async (req, res) => {
       profilePic,
       dateOfBirth: user.dateOfBirth,
       registrationNumber: user.registrationNumber,
+      department: user.department,
       roles: "student",
     });
 
@@ -26,7 +33,7 @@ const signUpController = async (req, res) => {
 
     let Courses = [];
 
-    await courses.map((item) => {
+    courses.map((item) => {
       Courses.push({
         courseName: item,
         student: docs._id,
@@ -37,12 +44,12 @@ const signUpController = async (req, res) => {
       docs.courses.push(data._id);
     });
 
-    await docs.save();
+    var { password, ...rest } = await docs.save();
 
-    return res.send({
-      data: docs,
+    return res.json({
+      data: rest,
       status: 2000,
-      token: generateToken(docs._id, docs.roles ),
+      token: generateToken(docs._id, docs.roles),
       msg: "You've successfully enrolled",
     });
   } catch (error) {
@@ -54,23 +61,29 @@ const signUpController = async (req, res) => {
 const loginController = async (req, res) => {
   const { password, registrationNumber } = req.body;
   try {
-    const user = await usersModel.findOne({ registrationNumber }).lean();
+    const user = await usersModel.findOne({
+      where: {
+        registrationNumber: req.body.registrationNumber,
+      },
+    }).lean()
 
-    if (user) {
-      const pwd = await bcrypt.compare(password, user.password);
-      if (pwd) {
-        const { password, ...rest } = user;
+    const pwd = await bcrypt.compare(password, user.password);
+  
+    if (pwd) {
+      const { password, ...rest } = user;
+     
 
-        return res.json({
-          data: rest,
-          msg: "successfully logged in",
-          token: generateToken( rest._id, rest.roles),
-          status: 2000,
-        });
-      }
+      return res.json({
+        data: rest,
+        msg: "successfully logged in",
+        token: generateToken(rest._id, rest.roles),
+        status: 2000,
+      });
     }
   } catch (error) {
-    return res.status(405).json({ msg: handleErrorMsg(error), status: 4000 });
+    return res
+      .status(405)
+      .json({ msg: "incorrect password or registration number", status: 4000 });
   }
 };
 module.exports = { signUpController, loginController };

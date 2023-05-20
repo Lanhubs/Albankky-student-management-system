@@ -1,23 +1,27 @@
 import {
   Button,
   Box,
-  Stack,
   Flex,
-  useToast,
   createStandaloneToast,
   Spinner,
+  Text,
+  Link,
+  Toast,
+  Heading,
 } from "@chakra-ui/react";
 import React from "react";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { FLEX } from "../../Components/DATA";
-
+import { COOKIE_SECRET, DEPTS, FLEX } from "../../Components/DATA";
+import { NavLink, useNavigate } from "react-router-dom";
 import {
   Cus_File_Upload_Input,
   Cus_Input,
   Cus_Select,
+  Cus_Select_Dept,
   Password,
 } from "../../Components/Utils/Cus_Inputs";
 import FingerPrint_Grabber from "../../Components/Utils/FingerPrint_Grabber";
+import { FaSpinner } from "react-icons/fa";
+import Cookies from "js-cookie";
 
 const Enrol = () => {
   const [profilePic, setProfilePic] = React.useState();
@@ -27,11 +31,18 @@ const Enrol = () => {
   const [courses, setCourses] = React.useState("");
   const [regNo, setRegNo] = React.useState();
   const [dateOfBirth, setDateOfBirth] = React.useState();
+  const navigate = useNavigate();
   const [fingerPrintId, setFingerPrintId] = React.useState();
   const [email, setEmail] = React.useState();
   const [submitting, setSubmitting] = React.useState(false);
   const [password, setPassword] = React.useState(false);
   const { toast, ToastContainer } = createStandaloneToast();
+  const [department, setDepartment] = React.useState("");
+  const [toastDetails, setToastDetails] = React.useState({
+    status: "",
+    description: "",
+    title: "",
+  });
   const handleEnrollment = () => {
     if (
       profilePic === "" ||
@@ -59,32 +70,56 @@ const Enrol = () => {
     formData.append("profilePic", profilePic);
     formData.append("registrationNumber", regNo);
     formData.append("dateOfBirth", dateOfBirth);
-    formData.append("fingerPrintId", fingerPrintId);
+    formData.append("fingerPrintId", "389y97356359");
     formData.append("password", password);
     formData.append("courses", courses.replace(",", ""));
     formData.append("email", email);
+    formData.append("department", department);
     setSubmitting(true);
     fetch("/api/enrol", {
       body: formData,
-      method: "POST"
+      method: "POST",
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data)
-        
-      }
-        )
-      .catch((e) => console.log(e));
+        toast({
+          description: "successfully enrolled. redirecting...",
+          status: "success",
+          title: "successfully enrolled. redirecting...",
+          duration: 3000,
+        });
+
+        Cookies.set(COOKIE_SECRET, JSON.stringify(data), {
+          expires: 3,
+          sameSite: "strict",
+        });
+        navigate("/");
+        console.log(data);
+      })
+      .catch((e) => {
+        toast({
+          description: e.msg,
+          title: e.msg,
+          status: "error",
+        });
+      });
   };
 
   return (
     <>
+    <Box width={"100vw"} height={{ base: "full", md: "100vh" }}>
+    <Heading fontSize={30} my="10" mx="auto" textAlign="center">
+          Albankky student management system
+        </Heading>
+
       <Flex
         gap="7%"
-        width={{ base: "100vw", md: "80%", lg: "60%" }}
-        height={{ base: "full", md: "100vh" }}
+        width={{ base: "100vw", md: "70%", lg: "60%" }}
+        h="full"
         display={FLEX}
-        my="20%"
+        bg="#fff"
+        shadow="md"
+        // my="20%"
         flexDirection={{
           base: "column-reverse",
           md: "column-reverse",
@@ -96,6 +131,16 @@ const Enrol = () => {
         margin="auto"
       >
         <ToastContainer />
+        {/* <Toast
+          duration={3000}
+          description={toastDetails.description}
+          position="top"
+          status={toastDetails.status}
+          title={toastDetails.title}
+          colorScheme="red"
+          icon
+        /> */}
+       
         <Box
           width={{ base: "full", md: "full", lg: "35%" }}
           display={"flex"}
@@ -113,7 +158,7 @@ const Enrol = () => {
             color="white"
             fontSize={20}
           >
-            {submitting ? <Spinner /> : "Enrol now"}
+            {submitting ? <FaSpinner /> : "Enrol now"}
           </Button>
         </Box>
 
@@ -160,7 +205,7 @@ const Enrol = () => {
           {/* reg number */}
 
           <Cus_Input
-            placeholder={"registration number"}
+            placeholder={"FAC/YEAR/DEG/SN"}
             handleChange={setRegNo}
             inputType={"text"}
             label="registration number"
@@ -176,9 +221,34 @@ const Enrol = () => {
             label="date of birth"
           />
           {/* choose courses */}
-          <Cus_Select courses={courses} setCourses={setCourses} />
+          <Cus_Select
+            courses={courses}
+            setCourses={setCourses}
+            placeholder="choose courses"
+          />
+          <Cus_Select_Dept
+            depts={DEPTS}
+            department={department}
+            setDepartment={setDepartment}
+            placeholder="choose your department"
+          />
+
+          <Text>
+            Already enrolled?{" "}
+            <Link
+              textTransform="capitalize"
+              fontSize={18}
+              color="green.500"
+              as={NavLink}
+              to="/login"
+            >
+              log in
+            </Link>
+          </Text>
         </Box>
       </Flex>
+      </Box>
+
     </>
   );
 };

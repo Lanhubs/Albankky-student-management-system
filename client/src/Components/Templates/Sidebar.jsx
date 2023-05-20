@@ -14,9 +14,10 @@ import {
   Box,
 } from "@chakra-ui/react";
 import { FLEX, SIDEBAR_DATA } from "../DATA";
+import { UserState } from "./UserProvider";
 
-const Sidebar = ({ children }) => {
-  const [showSideBar, setShowSideBar] = React.useState(false);
+const Sidebar = ({  showSideBar, setShowSideBar, children }) => {
+  const {user} =UserState()
   return (
     <>
       <span onClick={() => setShowSideBar(true)}>{children}</span>
@@ -37,8 +38,13 @@ const Sidebar = ({ children }) => {
           lg: FLEX,
         }}
         flexDirection="column"
+        
       >
-        <Box height="30%" w="full" bg="#fff"></Box>
+        <Box height="30%" w="full" bg="#fff" display="flex" alignItems="center" justifyContent='center'>
+          <Text textAlign={"center"} fontSize={25} fontFamily="Roboto">
+            Albankky Student management system
+          </Text>
+        </Box>
         <Box w="full" fontFamily="Roboto">
           {SIDEBAR_DATA?.map((item, idx) => (
             <HStack

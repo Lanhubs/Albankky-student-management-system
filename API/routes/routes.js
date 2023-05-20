@@ -5,10 +5,8 @@ const middleware = require("../middlewares");
 const {
   signUpController,
   loginController,
-
   getStudentController,
   getStudentsController,
-
   editMyDetailsController,
 } = require("../controllers");
 const { setAdminController } = require("../controllers/setAdmin");
@@ -28,6 +26,6 @@ routes
   .route("/attendance")
   .post(middleware.authToken,attendanceClassController)
   .get(middleware.authToken,verifyFingerPrintBeforeMarkingAttendanceController);
-routes.post("/set-admin", setAdminController);
+routes.post("/create-admin", setAdminController);
 
 module.exports = routes;

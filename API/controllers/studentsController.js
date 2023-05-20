@@ -11,15 +11,26 @@ const getStudentsController = async (req, res) => {
         .populate("courses")
         .select("-password")
         .lean();
-
-      return res.json({ ...docs, status: 2000 });
+      const courses = await models.coursesModel.find();
+      const department = courses.reduce((acc, student) => {
+        acc[student.department] = (acc[student.department] || 0) + 1;
+        return acc;
+      }, {});
+      var departmentalGrouping = object
+        .entries(department)
+        .map(([department, count]) => ({ department, count }));
+        console.log(departmentalGrouping)
+      return res.json({
+        sudents: docs,
+        studentsGroup: departmentalGrouping,
+        status: 2000,
+      });
     }
   } catch (error) {
     return res.json({ msg: handleErrorMsg(error), status: 4000 });
   }
 };
 const removeStudentController = async (req, res) => {
-  
   try {
     if (user.role.includes("admin")) {
       const docs = await models.usersModel

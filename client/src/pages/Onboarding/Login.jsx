@@ -1,37 +1,35 @@
 import {
   Box,
   Button,
+  Link,
+  Text,
   Card,
   Heading,
-  Input,
-  FormControl,
-  FormLabel,
   createStandaloneToast,
-  cookieStorageManager,
   Spinner,
 } from "@chakra-ui/react";
 import React from "react";
-import { FLEX } from "../../Components/DATA";
+import { COOKIE_SECRET, FLEX } from "../../Components/DATA";
 import { Cus_Input, Password } from "../../Components/Utils/Cus_Inputs";
-import Cookie from "js-cookie";
-import {useNavigate} from "react-router-dom"
+import Cookies from "js-cookie";
+
+import {NavLink, useNavigate } from "react-router-dom";
 export const Login = () => {
   const [regNo, setRegNo] = React.useState();
   const [password, setPassword] = React.useState();
-  const [submitting, setSubmitting] = React.useState(false)
+  const [submitting, setSubmitting] = React.useState(false);
   const { toast, ToastContainer } = createStandaloneToast();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const handleLogIn = () => {
     if (password === "" || regNo === "") {
       toast({
-        title: "input fields cannot be empty",
+        description: "input fields cannot be empty",
         status: "error",
         duration: 3000,
         position: "top",
       });
-      console.log("input fields cannot be empty")
     }
-    setSubmitting(true)
+    setSubmitting(true);
     fetch("/api/login", {
       body: JSON.stringify({ registrationNumber: regNo, password }),
       method: "POST",
@@ -42,25 +40,34 @@ export const Login = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data) {
-          console.log(data)
-          Cookie.set(
-            "albankky-student-management-system",
-            JSON.stringify(data),
-            {
-              expires: 3,
-              sameSite: "strict",
-            }
-          );
-          navigate("/")
-        }
+          console.log(data);
+          toast({
+            description: data.msg,
+            status: "success",
+            position: "top-right",
+            duration: 3000,
+            isClosable: true,
+          });
 
+          Cookies.set(COOKIE_SECRET, JSON.stringify(data), {
+            expires: 3,
+            sameSite: "strict",
+          });
+          navigate("/");
+        }
       })
       .catch((e) => {
-        console.log(e);
-
-      }).finally(()=>{
-        setSubmitting(false)
+        toast({
+          description: e.msg,
+          status: "error",
+          position: "top-right",
+          duration: 3000,
+          isClosable: true,
+        });
       })
+      .finally(() => {
+        setSubmitting(false);
+      });
   };
 
   return (
@@ -73,12 +80,12 @@ export const Login = () => {
       alignItems="center"
       justifyContent="center"
     >
+      <ToastContainer />
       <Heading fontSize={30} my="10" mx="auto" textAlign="center">
         Albankky student management system
       </Heading>
-      <ToastContainer />
       <Card
-        width={{ base: "90%", md: "60%", lg: "35%"}}
+        width={{ base: "85%", md: "60%", lg: "35%" }}
         px="2rem"
         height={{ base: "70%", md: "45%" }}
         d={FLEX}
@@ -105,11 +112,9 @@ export const Login = () => {
           inputType={"password"}
           placeholder="************"
         />
-
+        <Text >Don't have an account ? <Link as={NavLink} to="/signup">Sign up</Link></Text>
         <Button onClick={handleLogIn} height="50px" my="1.5rem" bg="green.500">
-        {submitting ? (
-          <Spinner/>
-        ): "Log in"}
+          {submitting ? <Spinner /> : "Log in"}
         </Button>
       </Card>
     </Box>

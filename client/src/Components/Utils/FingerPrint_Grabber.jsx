@@ -7,14 +7,17 @@ import FingerprintScanner, {
 } from "react-fingerprint";
 import { MdFingerprint, MdOutlineFingerprint } from "react-icons/md";
 import { FLEX } from "../DATA";
+import { FaSpinner } from "react-icons/fa";
 
 const FingerPrint_Grabber = ({ setFingerPrintId }) => {
   const [fingerP, setFingerP] = React.useState();
 
   const { isLoading, error, data } = useVisitorData();
+  console.log(data)
   const handleScan = async () => {
     // set(true);
     try {
+      
       setFingerP(data.visitorFound && data.visitorId);
       setFingerPrintId(data.visitorFound && data.visitorId);
     } catch (e) {
@@ -35,7 +38,7 @@ const FingerPrint_Grabber = ({ setFingerPrintId }) => {
       >
         
           <Text m="auto" color={fingerP ? "green.400" : "blackAlpha.600"}>
-            {isLoading ? <Spinner /> : <MdFingerprint fontSize={50} />}
+            {isLoading ? <FaSpinner /> : <MdFingerprint fontSize={50} />}
           </Text>
       
       </Box>
