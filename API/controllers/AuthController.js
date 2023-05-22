@@ -1,13 +1,17 @@
 const usersModel = require("../models/mongoDB_model/usersModel");
 const coursesModel = require("../models/mongoDB_model/coursesModel");
-const bcrypt = require("bcrypt");
+
 const { generateToken } = require("../middlewares");
 const { object_null_type_converter } = require("../middlewares/token");
 const { handleErrorMsg } = require("../middlewares/errorHandler");
+
 require("dotenv").config();
+const {
+  hashPassword,
+  comparePasswords,
+} = require("../middlewares/passwordHandler");
 const signUpController = async (req, res) => {
   try {
-    const user = object_null_type_converter(req.body);
     var { password, fingerPrintId, ...rest } = object_null_type_converter(
       req.body
     );
@@ -15,21 +19,22 @@ const signUpController = async (req, res) => {
     const profilePic = req.file.path
       .replaceAll("\\", "/")
       .replace("public", "");
-    const hashedPwd = await bcrypt.hash(user.password, 20);
+    const encryptedPwd = hashPassword(password);
+
     const docs = new usersModel({
-      fullName: user.fullName,
-      email: user.email,
-      password: hashedPwd,
+      fullName: rest.fullName,
+      email: rest.email,
+      password: encryptedPwd,
       courses: [],
-      fingerPrintId: user.fingerPrintId,
+      fingerPrintId: fingerPrintId,
       profilePic,
-      dateOfBirth: user.dateOfBirth,
-      registrationNumber: user.registrationNumber,
-      department: user.department,
+      dateOfBirth: rest.dateOfBirth,
+      registrationNumber: rest.registrationNumber,
+      department: rest.department,
       roles: "student",
     });
 
-    const courses = user.courses.split(",");
+    const courses = rest.courses.split(",");
 
     let Courses = [];
 
@@ -53,25 +58,29 @@ const signUpController = async (req, res) => {
       msg: "You've successfully enrolled",
     });
   } catch (error) {
+    console.log(error);
     if (error) {
-      return res.status(405).send({ msg: handleErrorMsg(error), status: 4000 });
+      return res
+        .status(405)
+        .send({ msg: error /* handleErrorMsg(error) */, status: 4000 });
     }
   }
 };
 const loginController = async (req, res) => {
   const { password, registrationNumber } = req.body;
+  console.log(req.body)
   try {
-    const user = await usersModel.findOne({
-      where: {
-        registrationNumber: req.body.registrationNumber,
-      },
-    }).lean()
+    const user = await usersModel
+      .findOne({
+        
+          registrationNumber: req.body.registrationNumber,
+        })
+      .lean();
+      const decryptedPassword = comparePasswords(password, user.password);
+      console.log(decryptedPassword);
 
-    const pwd = await bcrypt.compare(password, user.password);
-  
-    if (pwd) {
+    if (decryptedPassword) {
       const { password, ...rest } = user;
-     
 
       return res.json({
         data: rest,

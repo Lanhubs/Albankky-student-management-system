@@ -8,23 +8,23 @@ import FingerprintScanner, {
 import { MdFingerprint, MdOutlineFingerprint } from "react-icons/md";
 import { FLEX } from "../DATA";
 import { FaSpinner } from "react-icons/fa";
+import "@passageidentity/passage-elements/passage-register";
 
 const FingerPrint_Grabber = ({ setFingerPrintId }) => {
   const [fingerP, setFingerP] = React.useState();
 
   const { isLoading, error, data } = useVisitorData();
-  console.log(data)
+ 
   const handleScan = async () => {
     // set(true);
     try {
-      
       setFingerP(data.visitorFound && data.visitorId);
       setFingerPrintId(data.visitorFound && data.visitorId);
     } catch (e) {
       console.log(error);
     }
   };
-
+  
   return (
     <Box w="full" py="1rem">
       <Box
@@ -36,12 +36,11 @@ const FingerPrint_Grabber = ({ setFingerPrintId }) => {
         border="1.7px solid"
         borderColor="green.500"
       >
-        
-          <Text m="auto" color={fingerP ? "green.400" : "blackAlpha.600"}>
-            {isLoading ? <FaSpinner /> : <MdFingerprint fontSize={50} />}
-          </Text>
-      
+        <Text m="auto" color={fingerP ? "green.400" : "blackAlpha.600"}>
+          {isLoading ? <FaSpinner /> : <MdFingerprint fontSize={50} />}
+        </Text>
       </Box>
+      <Scanner />
       <Button
         onClick={handleScan}
         w="full"
@@ -56,3 +55,9 @@ const FingerPrint_Grabber = ({ setFingerPrintId }) => {
 };
 
 export default FingerPrint_Grabber;
+
+export const Scanner = () => {
+  return <div>
+    <passage-register  app-id={import.meta.env.VITE_APP_ID}></passage-register >
+  </div>;
+};

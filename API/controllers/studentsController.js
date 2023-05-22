@@ -3,15 +3,17 @@ const models = require("../models/mongoDB_model");
 require("dotenv").config();
 
 const getStudentsController = async (req, res) => {
+
+  const user = req.user;
+  console.log(user)
   try {
-    const user = req.user;
     if (user.roles.includes("admin")) {
       const docs = await models.usersModel
         .find({ "roles.admin": { $ne: true } })
         .populate("courses")
         .select("-password")
         .lean();
-      const courses = await models.coursesModel.find();
+      /* const courses = await models.coursesModel.find();
       const department = courses.reduce((acc, student) => {
         acc[student.department] = (acc[student.department] || 0) + 1;
         return acc;
@@ -24,7 +26,7 @@ const getStudentsController = async (req, res) => {
         sudents: docs,
         studentsGroup: departmentalGrouping,
         status: 2000,
-      });
+      }); */
     }
   } catch (error) {
     return res.json({ msg: handleErrorMsg(error), status: 4000 });

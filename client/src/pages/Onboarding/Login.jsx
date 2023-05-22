@@ -113,7 +113,7 @@ export const Login = () => {
           placeholder="************"
         />
         <Text >Don't have an account ? <Link as={NavLink} to="/signup">Sign up</Link></Text>
-        <Button onClick={handleLogIn} height="50px" my="1.5rem" bg="green.500">
+        <Button onClick={handleLogIn} height="50px" my="1rem" bg="green.500">
           {submitting ? <Spinner /> : "Log in"}
         </Button>
       </Card>

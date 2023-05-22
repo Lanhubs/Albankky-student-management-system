@@ -36,7 +36,6 @@ const index = () => {
         console.log(e);
       });
   }, []);
-  console.log(details)
   return (
     <Stack w="full" height={{ base: "full", md: "100vh" }} gap="1rem">
       <Card

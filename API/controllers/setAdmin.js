@@ -1,14 +1,15 @@
 const { handleErrorMsg } = require("../middlewares/errorHandler");
+const { hashPassword } = require("../middlewares/passwordHandler");
 const { object_null_type_converter } = require("../middlewares/token");
 const usersModel = require("../models/mongoDB_model/usersModel");
 const bcrypt = require("bcrypt");
 exports.setAdminController = async (req, res) => {
-  const body =object_null_type_converter(req.body)
-  console.log( body)
-  
+  const body = req.body;
+
+  const hashedPwd = hashPassword(body.password, 20);
+  console.log(hashedPwd);
   try {
-    const hashedPwd = await bcrypt.hash(body.password, 30);
-    console.log(hashedPwd)
+    console.log(hashedPwd);
     const user = new usersModel({
       fullName: body.fullName,
       email: body.email,
@@ -20,7 +21,6 @@ exports.setAdminController = async (req, res) => {
       password: hashedPwd,
     });
     if (user) {
-      
       await user.save();
 
       res.send({ md: "created the admin", user });

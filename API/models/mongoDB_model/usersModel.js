@@ -1,15 +1,16 @@
+const { Schema } = require("mongoose");
 const mongoose = require("./connection");
 const studentSchema = mongoose.Schema({
   fullName: {
     type: String,
-    // required: [true, "Full name is compulsory"],
+    required: [true, "Full name is compulsory"],
     allowNull: false,
   },
   password: {
     type: String,
-    // required: [true, "password field is compulsory"],
+    // data: mongoose.Schema.Types.ObjectId,
+    required: [true, "password field is compulsory"],
     allowNull: false,
-    
   },
   email: {
     type: String,
@@ -18,31 +19,34 @@ const studentSchema = mongoose.Schema({
   },
   dateOfBirth: {
     type: String,
-    // required: [true, "date of birth is compulsory"],
+    required: [true, "date of birth is compulsory"],
     allowNull: true,
   },
   fingerPrintId: {
     type: String,
-    // required: [true, "you fingerprint is required"],
+    required: [true, "you fingerprint is required"],
   },
   profilePic: {
     type: String,
-    // required: [true, "profile picture of yourself is required"],
+    required: [true, "profile picture of yourself is required"],
   },
-  courses: [{ type: mongoose.Schema.Types.ObjectId, ref: "courses", required: false }],
+  courses: [
+    { type: mongoose.Schema.Types.ObjectId, ref: "courses", required: false },
+  ],
   registrationNumber: {
     type: String,
-    // required: [true, "registration number is required"],
+    required: [true, "registration number is required"],
     unique: [true, "registration number already in use"],
   },
-/*   verified: {
+ 
+  /*   verified: {
     type: Boolean,
     required: true
     default: false,
   }, */
-  department:{
+  department: {
     type: String,
-    required: [true, "department must be selected"]
+    required: [true, "department must be selected"],
   },
   roles: {
     type: [
@@ -51,7 +55,7 @@ const studentSchema = mongoose.Schema({
         enum: ["student", "admin"],
       },
     ],
-   
+
     default: ["student"],
   },
 });

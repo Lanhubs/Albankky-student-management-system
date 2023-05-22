@@ -33,6 +33,7 @@ const AttendLecture = () => {
         w="full"
         height="100%"
       >
+
         <Heading fontSize={25}>Students in Attendance</Heading>
         <Heading fontSize={20} my="1rem">
           Course name: {params?.course}
@@ -60,7 +61,7 @@ const AttendLecture = () => {
             <Avatar width="60px" height="60px" />
             <Text>Yakubu musa</Text>
             <Authenticate_FingerPrint>
-              <Button>
+              <Button >
                 Attend class
                 <MdFingerprint size={20} />
               </Button>

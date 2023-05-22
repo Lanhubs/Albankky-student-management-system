@@ -16,6 +16,7 @@
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@fingerprintjs/fingerprintjs-pro-react": "^2.3.3",
+    "@passageidentity/passage-elements": "^1.5.1",
     "browser-image-compression": "^2.0.2",
     "framer-motion": "^10.12.4",
     "js-cookie": "^3.0.5",
