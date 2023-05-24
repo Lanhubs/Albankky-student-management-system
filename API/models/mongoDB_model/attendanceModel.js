@@ -5,7 +5,7 @@ const attendanceSchema = {
   },
   student: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "students",
+    ref: "student",
   },
   date: {
     type: Date,
@@ -17,4 +17,6 @@ const attendanceSchema = {
     default: false,
   },
 };
+
+
 exports.Attendance = mongoose.model("attendance", attendanceSchema);

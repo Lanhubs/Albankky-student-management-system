@@ -13,7 +13,8 @@ import { COOKIE_SECRET, FLEX } from "../../Components/DATA";
 import { Cus_Input, Password } from "../../Components/Utils/Cus_Inputs";
 import Cookies from "js-cookie";
 
-import {NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import axios from "axios";
 export const Login = () => {
   const [regNo, setRegNo] = React.useState();
   const [password, setPassword] = React.useState();
@@ -30,46 +31,30 @@ export const Login = () => {
       });
     }
     setSubmitting(true);
-    fetch("/api/login", {
-      body: JSON.stringify({ registrationNumber: regNo, password }),
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
+   
+    axios
+      .post("/api/login", { registrationNumber: regNo, password })
       .then((data) => {
-        if (data) {
-          toast({
-            description: data.msg,
-            status: "success",
-
-            position: "top-right",
-            duration: 3000,
-            isClosable: true,
-          });
-
-          Cookies.set(COOKIE_SECRET, JSON.stringify(data), {
-            expires: 3,
-            sameSite: "strict",
-          });
-          navigate("/");
-        }
-      })
-      .catch((e) => {
         toast({
-          description: e.msg,
-          status: "error",
+          description: data.data.msg,
+          status: "success",
           position: "top-right",
           duration: 3000,
           isClosable: true,
         });
-      })
-      .finally(() => {
-        setSubmitting(false);
-      });
-  };
 
+        Cookies.set(COOKIE_SECRET, JSON.stringify(data.data), {
+          expires: 3,
+          sameSite: "strict",
+        });
+        navigate("/");
+      }).catch(e=>{
+        console.log(e)
+      })
+  };
+  React.useEffect(() => {
+    Cookies.remove(COOKIE_SECRET);
+  }, []);
   return (
     <Box
       w="100vw"
@@ -82,7 +67,7 @@ export const Login = () => {
     >
       <ToastContainer />
       <Heading fontSize={30} my="10" mx="auto" textAlign="center">
-        Albankky student management system
+        Student Management Mystem
       </Heading>
       <Card
         width={{ base: "85%", md: "60%", lg: "35%" }}
@@ -112,7 +97,12 @@ export const Login = () => {
           inputType={"password"}
           placeholder="************"
         />
-        <Text >Don't have an account ? <Link as={NavLink} to="/signup">Sign up</Link></Text>
+        <Text>
+          Don't have an account ?{" "}
+          <Link as={NavLink} to="/signup">
+            Sign up
+          </Link>
+        </Text>
         <Button onClick={handleLogIn} height="50px" my="1rem" bg="green.500">
           {submitting ? <Spinner /> : "Log in"}
         </Button>

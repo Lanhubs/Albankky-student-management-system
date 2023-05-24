@@ -4,34 +4,40 @@ import { COOKIE_SECRET, FLEX } from "../../Components/DATA";
 import Wrapper from "../../Components/Templates/Wrapper";
 import { Cus_File_Upload_Input } from "../../Components/Utils/Cus_Inputs";
 import UserProvider, {
+  Context,
   UserState,
 } from "../../Components/Templates/UserProvider";
 import Profile from "../Profile";
 import Cookies from "js-cookie";
+import axios from "axios";
+import Student from "../../Components/Utils/Student";
 const Home = () => {
-  const { token, user } = UserState();
-  const [data, setData] = React.useState();
-
-  console.log(user)
+  const { user } = UserState();
+  const [details, setDetails] = React.useState();
+  const [isAdmin, setIsAdmin] = React.useState(false);
   React.useEffect(() => {
-    const token = JSON.parse(Cookies.get(COOKIE_SECRET));
+    const user = JSON.parse(Cookies.get(COOKIE_SECRET));
 
-    if (user.roles[0] === "admin") {
-      fetch("/api/get-students", {
+    if (user.data.roles.includes("admin")) {
+      setIsAdmin(true);
+      axios.get("/api/get-students", {
         headers: {
-          Authorization: `Bearer ${token.token}`,
+          Authorization: `Bearer ${user.token}`,
         },
       })
-        .then((res) => res.json())
-        .then((result) => {
-          console.log(result);
-          setData(result);
+      .then((studs) => {
+         
+        setDetails(studs.data.students)
+
+          console.log(studs)
+
         })
         .catch((e) => console.log(e));
+
     }
-  }, []);
+  }, [user]);
   return (
-    <UserProvider>
+    <>
       <Wrapper>
         <Box py="2rem" px="2rem" display={FLEX} flexDir="column">
           <Flex
@@ -40,11 +46,11 @@ const Home = () => {
             height="full"
             justifyContent={{ base: "space-between", md: "" }}
           >
-            {user.roles[0] === "admin" ? (
+            {isAdmin ? (
               <>
-                {data.map((item, idx) => (
-                  <Box key={idx} bg="#fff" p="1rem" >{item?.fullName}</Box>
-                ))}
+                {details?.map((item, idx) => (
+                 <Student key={idx} profilePic={item.profilePic} fullName={item.fullName} department={item.department} regNo={item.registrationNumber}/>
+                ))} 
               </>
             ) : (
               <Profile />
@@ -52,7 +58,7 @@ const Home = () => {
           </Flex>
         </Box>
       </Wrapper>
-    </UserProvider>
+    </>
   );
 };
 

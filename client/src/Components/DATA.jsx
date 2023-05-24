@@ -4,6 +4,8 @@ import {
   FaUsers,
   FaUserEdit,
   FaRegUser,
+  FaSignOutAlt,
+  FaSignInAlt,
 } from "react-icons/fa";
 import { MdMenuBook } from "react-icons/md";
 
@@ -15,29 +17,36 @@ const SIDEBAR_DATA = [
   },
   {
     title: "Attendance",
-    link: "",
+    link: "/attendances",
     icon: <FaRegAddressBook />,
   },
-  {
-    title: "Students",
-    link: "",
-    icon: <FaUsers />,
-  },
-  
 
   {
     title: "course info",
     link: "",
-    icon: <MdMenuBook/>
+    icon: <MdMenuBook />,
   },
-  { title: "profile", link: "/", icon : <FaRegUser/> },
+  {
+    title: "log out",
+    link: "/login",
+    icon: <FaSignOutAlt />,
+  },
+];
+export const STUDENT__SIDBAR_DATA = [
+  { title: "profile", link: "/", icon: <FaRegUser /> },
+  { title: "Attend class", link: "/attendance", icon: <FaRegAddressBook /> },
+
+  {
+    title: "log out",
+    link: "/login",
+    icon: <FaSignOutAlt />,
+  },
 ];
 const FLEX =
   "flex" || "-ms-flex" || "flexbox" || "-webkit-flexbox" || "-webkit-flex";
 
-
-const DEPTS =["100Level", "200Level", "300Level", "400Level"]
+const DEPTS = ["100Level", "200Level", "300Level", "400Level"];
 export const API_KEY = "wiYL19lefHaXzBnaeBAA";
-const COOKIE_SECRET = "ALBANKKY_SYS_SECRET"
+const COOKIE_SECRET = "ALBANKKY_SYS_SECRET";
 
 export { SIDEBAR_DATA, FLEX, DEPTS, COOKIE_SECRET };

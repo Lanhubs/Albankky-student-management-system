@@ -93,6 +93,7 @@ export const Cus_File_Upload_Input = ({ placeholder, handleChange }) => {
       >
         <Input
           onChange={({ target: { files } }) => {
+            
             files && setImageName(files[0].name);
             handleChange(files[0]);
             console.log(files[0]);

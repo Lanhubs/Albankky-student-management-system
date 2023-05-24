@@ -1,7 +1,7 @@
 const usersModel = require("../models/mongoDB_model/usersModel");
 const coursesModel = require("../models/mongoDB_model/coursesModel");
-
-const { generateToken } = require("../middlewares");
+const {Attendance}= require("../models/mongoDB_model/attendanceModel")
+ const { generateToken } = require("../middlewares");
 const { object_null_type_converter } = require("../middlewares/token");
 const { handleErrorMsg } = require("../middlewares/errorHandler");
 
@@ -67,21 +67,19 @@ const signUpController = async (req, res) => {
   }
 };
 const loginController = async (req, res) => {
-  const { password, registrationNumber } = req.body;
-  console.log(req.body)
+  const { password } = req.body;
   try {
     const user = await usersModel
       .findOne({
-        
-          registrationNumber: req.body.registrationNumber,
-        })
+        registrationNumber: req.body.registrationNumber,
+      })
       .lean();
-      const decryptedPassword = comparePasswords(password, user.password);
-      console.log(decryptedPassword);
+      
+    const decryptedPassword = comparePasswords(password, user.password);
+   
 
     if (decryptedPassword) {
       const { password, ...rest } = user;
-
       return res.json({
         data: rest,
         msg: "successfully logged in",
@@ -90,9 +88,7 @@ const loginController = async (req, res) => {
       });
     }
   } catch (error) {
-    return res
-      .status(405)
-      .json({ msg: "incorrect password or registration number", status: 4000 });
+    return res.json({ msg: "incorrect password or registration number", status: 4000 });
   }
 };
 module.exports = { signUpController, loginController };

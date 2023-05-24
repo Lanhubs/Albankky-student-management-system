@@ -6,26 +6,32 @@ const {
   signUpController,
   loginController,
   getStudentController,
-  getStudentsController,
   editMyDetailsController,
+  getStudentsController,
 } = require("../controllers");
 const { setAdminController } = require("../controllers/setAdmin");
 const {
   attendanceClassController,
   verifyFingerPrintBeforeMarkingAttendanceController,
 } = require("../controllers/attendClassController");
+const { showAllAttendance } = require("../controllers/AttendanceController");
 
 routes.get("/", getStudentController);
 routes.post("/enrol", middleware.upload.single("profilePic"), signUpController);
 routes.post("/login", loginController);
 
-routes.post("/get-students", middleware.authToken, getStudentsController);
 routes.get("/get-student", middleware.authToken, getStudentController);
 routes.post("/get-student", middleware.authToken, editMyDetailsController);
+routes.get("/get-students", middleware.authToken, getStudentsController);
 routes
-  .route("/attendance")
-  .post(middleware.authToken,attendanceClassController)
-  .get(middleware.authToken,verifyFingerPrintBeforeMarkingAttendanceController);
+.route("/mark-attendance")
+  .post(middleware.authToken, attendanceClassController)
+  .get(
+    middleware.authToken,
+    verifyFingerPrintBeforeMarkingAttendanceController
+  );
+  routes.get("/attendance", middleware.authToken,showAllAttendance)
+
 routes.post("/create-admin", setAdminController);
 
 module.exports = routes;

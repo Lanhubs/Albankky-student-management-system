@@ -1,7 +1,7 @@
 {
   "name": "api",
   "version": "1.0.0",
-  "description": "a student management system for my final year",
+  "description": "a Student Management Mystem for my final year",
   "main": "app.js",
   "scripts": {
     "start": "nodemon app.js"

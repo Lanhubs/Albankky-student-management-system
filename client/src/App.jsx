@@ -10,7 +10,7 @@ import Enrol from "./pages/Onboarding";
 import { Login } from "./pages/Onboarding/Login";
 import { Global } from "@emotion/react";
 import { ChakraProvider } from "@chakra-ui/react";
-import AttendLecture from "./pages/Attendance";
+import Attendance from "./pages/Attendance";
 import { API_KEY } from "./Components/DATA";
 function App() {
   return (
@@ -33,7 +33,7 @@ function App() {
             <Route
               path="/attend-class/:course"
               exact
-              element={<AttendLecture />}
+              element={<Attendance />}
             />
           </Routes>
         </BrowserRouter>

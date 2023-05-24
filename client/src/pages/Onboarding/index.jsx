@@ -109,7 +109,7 @@ const Enrol = () => {
     <>
     <Box width={"100vw"} height={{ base: "full", md: "100vh" }}>
     <Heading fontSize={30} my="10" mx="auto" textAlign="center">
-          Albankky student management system
+          Student Management Mystem
         </Heading>
 
       <Flex

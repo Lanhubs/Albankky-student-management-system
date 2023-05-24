@@ -19,10 +19,12 @@ const index = () => {
   const { user } = UserState();
   const [details, setDetails] = React.useState();
   const [loading, setLoading] = React.useState(false);
+ 
   React.useEffect(() => {
     setLoading(true);
     const cookie = JSON.parse(Cookies.get(COOKIE_SECRET));
     const token = cookie.token;
+
     fetch("/api/get-student", {
       headers: {
         "Authorization": `Bearer ${token}`,
@@ -35,7 +37,7 @@ const index = () => {
       .catch((e) => {
         console.log(e);
       });
-  }, []);
+  }, []); 
   return (
     <Stack w="full" height={{ base: "full", md: "100vh" }} gap="1rem">
       <Card
@@ -55,7 +57,8 @@ const index = () => {
           <Avatar
             rounded="md"
             height="full"
-            width={{ base: "full", md: "40%" }}
+            src={user?.profilePic}
+            width={{ base: "full", md: "30%" }}
           />
           <Box flex={1}>
             <Text fontSize="20px" fontWeight={600}>

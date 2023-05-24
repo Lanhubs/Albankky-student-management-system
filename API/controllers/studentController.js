@@ -11,7 +11,6 @@ const getStudentController = async (req, res) => {
         .populate("courses")
         .select("-password")
         .lean();
-        console.log(docs)
       return res.json({ data: docs.courses, status: 2000 });
     }
   } catch (error) {
