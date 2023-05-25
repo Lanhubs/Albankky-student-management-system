@@ -1,7 +1,7 @@
 const usersModel = require("../models/mongoDB_model/usersModel");
 const coursesModel = require("../models/mongoDB_model/coursesModel");
-const {Attendance}= require("../models/mongoDB_model/attendanceModel")
- const { generateToken } = require("../middlewares");
+const Attendance = require("../models/mongoDB_model/attendanceModel");
+const { generateToken } = require("../middlewares");
 const { object_null_type_converter } = require("../middlewares/token");
 const { handleErrorMsg } = require("../middlewares/errorHandler");
 
@@ -33,23 +33,36 @@ const signUpController = async (req, res) => {
       department: rest.department,
       roles: "student",
     });
+    let Courses = [];
+    let attendanceStatus;
+    var attendancesCourses = [];
 
+    if (!docs.roles !== "admin") {
+    }
+    // var userAttendance =
     const courses = rest.courses.split(",");
 
-    let Courses = [];
-
-    courses.map((item) => {
+    courses.map( (item) => {
       Courses.push({
         courseName: item,
         student: docs._id,
       });
+     
+      attendancesCourses.push({
+        course: item,
+        student: docs._id,
+        isPresent: [],
+      })
     });
-    var dep_courses = await coursesModel.insertMany(Courses);
+    // await attendanceStatus.save();
+   await  Attendance.insertMany(attendancesCourses)
+   
+     var dep_courses = await coursesModel.insertMany(Courses);
     dep_courses.map((data) => {
       docs.courses.push(data._id);
     });
 
-    var { password, ...rest } = await docs.save();
+     var { password, ...rest } = await docs.save();
 
     return res.json({
       data: rest,
@@ -74,9 +87,8 @@ const loginController = async (req, res) => {
         registrationNumber: req.body.registrationNumber,
       })
       .lean();
-      
+
     const decryptedPassword = comparePasswords(password, user.password);
-   
 
     if (decryptedPassword) {
       const { password, ...rest } = user;
@@ -88,7 +100,10 @@ const loginController = async (req, res) => {
       });
     }
   } catch (error) {
-    return res.json({ msg: "incorrect password or registration number", status: 4000 });
+    return res.json({
+      msg: "incorrect password or registration number",
+      status: 4000,
+    });
   }
 };
 module.exports = { signUpController, loginController };

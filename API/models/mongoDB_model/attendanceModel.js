@@ -1,22 +1,30 @@
 const mongoose = require("./connection");
-const attendanceSchema = {
-  course:{
+const attendanceSchema = mongoose.Schema({
+  course: {
     type: String,
   },
   student: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "student",
   },
-  date: {
-    type: Date,
-    default: Date.now
+  timer: {
+    type: String,
+    interval: "10m",
+    repeat: true,
   },
-  present: {
-    type: Boolean,
-    required: true,
-    default: false,
-  },
-};
-
-
-exports.Attendance = mongoose.model("attendance", attendanceSchema);
+  isPresent: [
+    {
+      status: {
+        type: Boolean,
+        default: false,
+      },
+      day: mongoose.Schema.Types.Date,
+    },
+  ],
+});
+const Attendance = mongoose.model("attendance", attendanceSchema);
+/* Attendance.setTimer = () => {
+  Attendance.present[0].status = false;
+  Attendance.present[0].save();
+}; */
+module.exports = Attendance;
