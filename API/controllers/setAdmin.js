@@ -7,14 +7,14 @@ exports.setAdminController = async (req, res) => {
   const body = req.body;
 
   const hashedPwd = hashPassword(body.password, 20);
-  console.log(hashedPwd);
+ 
   try {
     console.log(hashedPwd);
     const user = new usersModel({
       fullName: body.fullName,
       email: body.email,
       dateOfBirth: body.dateOfBirth,
-      fingerPrintId: body.fingerPrintId,
+
       courses: "",
       registrationNumber: body.registrationNumber,
       roles: "admin",

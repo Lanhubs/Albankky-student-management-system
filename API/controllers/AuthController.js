@@ -12,9 +12,7 @@ const {
 } = require("../middlewares/passwordHandler");
 const signUpController = async (req, res) => {
   try {
-    var { password, fingerPrintId, ...rest } = object_null_type_converter(
-      req.body
-    );
+    var { password, ...rest } = object_null_type_converter(req.body);
 
     const profilePic = req.file.path
       .replaceAll("\\", "/")
@@ -26,7 +24,6 @@ const signUpController = async (req, res) => {
       email: rest.email,
       password: encryptedPwd,
       courses: [],
-      fingerPrintId: fingerPrintId,
       profilePic,
       dateOfBirth: rest.dateOfBirth,
       registrationNumber: rest.registrationNumber,
@@ -42,27 +39,26 @@ const signUpController = async (req, res) => {
     // var userAttendance =
     const courses = rest.courses.split(",");
 
-    courses.map( (item) => {
+    courses.map((item) => {
       Courses.push({
         courseName: item,
         student: docs._id,
       });
-     
+
       attendancesCourses.push({
         course: item,
         student: docs._id,
         isPresent: [],
-      })
+      });
     });
-    // await attendanceStatus.save();
-   await  Attendance.insertMany(attendancesCourses)
-   
-     var dep_courses = await coursesModel.insertMany(Courses);
+    await Attendance.insertMany(attendancesCourses);
+
+    var dep_courses = await coursesModel.insertMany(Courses);
     dep_courses.map((data) => {
       docs.courses.push(data._id);
     });
 
-     var { password, ...rest } = await docs.save();
+    var { password, ...rest } = await docs.save();
 
     return res.json({
       data: rest,
@@ -86,12 +82,14 @@ const loginController = async (req, res) => {
       .findOne({
         registrationNumber: req.body.registrationNumber,
       })
+      .populate("courses")
       .lean();
 
     const decryptedPassword = comparePasswords(password, user.password);
 
     if (decryptedPassword) {
       const { password, ...rest } = user;
+      console.log(rest);
       return res.json({
         data: rest,
         msg: "successfully logged in",

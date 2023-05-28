@@ -22,12 +22,10 @@ const studentSchema = mongoose.Schema({
     required: [true, "date of birth is compulsory"],
     allowNull: true,
   },
-  fingerPrintId: {
-    type: String,
-    required: [true, "you fingerprint is required"],
-  },
+
   profilePic: {
     type: String,
+    // contentType: String,
     required: [true, "profile picture of yourself is required"],
   },
   courses: [
@@ -39,11 +37,7 @@ const studentSchema = mongoose.Schema({
     unique: [true, "registration number already in use"],
   },
  
-  /*   verified: {
-    type: Boolean,
-    required: true
-    default: false,
-  }, */
+ 
   department: {
     type: String,
     required: [true, "department must be selected"],

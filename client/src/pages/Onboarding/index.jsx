@@ -19,7 +19,6 @@ import {
   Cus_Select_Dept,
   Password,
 } from "../../Components/Utils/Cus_Inputs";
-import FingerPrint_Grabber from "../../Components/Utils/FingerPrint_Grabber";
 import { FaSpinner } from "react-icons/fa";
 import Cookies from "js-cookie";
 
@@ -32,7 +31,6 @@ const Enrol = () => {
   const [regNo, setRegNo] = React.useState();
   const [dateOfBirth, setDateOfBirth] = React.useState();
   const navigate = useNavigate();
-  const [fingerPrintId, setFingerPrintId] = React.useState();
   const [email, setEmail] = React.useState();
   const [submitting, setSubmitting] = React.useState(false);
   const [password, setPassword] = React.useState(false);
@@ -51,7 +49,7 @@ const Enrol = () => {
       courses === "" ||
       regNo === "" ||
       dateOfBirth === "" ||
-      fingerPrintId === "" ||
+    
       lastName === "" ||
       middleName === "" ||
       password === ""
@@ -70,7 +68,6 @@ const Enrol = () => {
     formData.append("profilePic", profilePic);
     formData.append("registrationNumber", regNo);
     formData.append("dateOfBirth", dateOfBirth);
-    formData.append("fingerPrintId", "389y97356359");
     formData.append("password", password);
     formData.append("courses", courses.replace(",", ""));
     formData.append("email", email);
@@ -148,7 +145,7 @@ const Enrol = () => {
           gap="1rem"
         >
           <Cus_File_Upload_Input handleChange={setProfilePic} />
-          <FingerPrint_Grabber setFingerPrintId={setFingerPrintId} />
+        
           <Button
             onClick={handleEnrollment}
             w="full"

@@ -29,21 +29,22 @@ const Home = () => {
          
         setDetails(studs.data.students)
 
-          console.log(studs)
 
         })
         .catch((e) => console.log(e));
 
     }
   }, [user]);
-  return (
+  return (    
     <>
       <Wrapper>
+
         <Box py="2rem" px="2rem" display={FLEX} flexDir="column">
           <Flex
             rowGap="1rem"
             flexWrap="wrap"
             height="full"
+          flexDir="column"
             justifyContent={{ base: "space-between", md: "" }}
           >
             {isAdmin ? (
@@ -53,7 +54,11 @@ const Home = () => {
                 ))} 
               </>
             ) : (
+              <>
+            
+              
               <Profile />
+              </>
             )}
           </Flex>
         </Box>

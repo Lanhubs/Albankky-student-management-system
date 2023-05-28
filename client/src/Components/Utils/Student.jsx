@@ -6,7 +6,6 @@ const Student = (props) => {
     <HStack
       bg="white"
       justifyContent={"space-between"}
-     
       p="1rem"
       rounded="md"
       alignItems={"center"}
@@ -17,8 +16,10 @@ const Student = (props) => {
       <Text fontSize={18} fontWeight="medium">
         {props?.fullName}
       </Text>
-      <Text>{props.department}</Text>
       <Text>{props?.regNo}</Text>
+      <Text>{props?.department}</Text>
+      <Text>{props?.email}</Text>
+
     </HStack>
   );
 };

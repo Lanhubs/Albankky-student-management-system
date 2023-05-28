@@ -24,7 +24,7 @@ function App() {
               <Enrol />
             </Wrapper>
             
-            
+          
             } />
             <Route path="/signup" exact element={<Enrol />} />
 
@@ -35,6 +35,7 @@ function App() {
               exact
               element={<Attendance />}
             />
+             <Route path="attendances" element={<Attendance/>}/>
           </Routes>
         </BrowserRouter>
       </FpjsProvider>

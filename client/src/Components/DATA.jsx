@@ -34,7 +34,7 @@ const SIDEBAR_DATA = [
 ];
 export const STUDENT__SIDBAR_DATA = [
   { title: "profile", link: "/", icon: <FaRegUser /> },
-  { title: "Attend class", link: "/attendance", icon: <FaRegAddressBook /> },
+  { title: "Attend class", link: "/attendances", icon: <FaRegAddressBook /> },
 
   {
     title: "log out",

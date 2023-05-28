@@ -23,9 +23,13 @@ const Sidebar = ({ showSideBar, setShowSideBar, children }) => {
     <>
       <span onClick={() => setShowSideBar(true)}>{children}</span>
       <Box
+      
+        onMouseOut={() => setShowSideBar(false)}
+        onMouseLeave={() => setShowSideBar(false)}
         transition="2s ease"
-        width={{ base: showSideBar ? "90%" : 0, md: "290px", lg: "290px" }}
+        width={{ base: showSideBar ? "80%" : 0, md: "290px", lg: "290px" }}
         pos="fixed"
+        shadow="md"
         zIndex={100}
         h="100vh"
         bg="#000"
@@ -46,6 +50,7 @@ const Sidebar = ({ showSideBar, setShowSideBar, children }) => {
           display="flex"
           alignItems="center"
           justifyContent="center"
+          p="1rem"
         >
           <Text textAlign={"center"} fontSize={25} fontFamily="Roboto">
             Student Management Mystem

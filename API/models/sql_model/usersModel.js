@@ -27,10 +27,7 @@ const usersModel = db.define(
       required: true,
       allowNull: false,
     },
-    fingerPrintId:{
-        type: Sequelize.EMAIL,
-        required: true,
-    },
+   
     profilePic:{
         type: Sequelize.STRING,
         required: true,

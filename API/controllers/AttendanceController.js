@@ -1,11 +1,11 @@
-const { Attendance } = require("../models/mongoDB_model/attendanceModel");
+const Attendance  = require("../models/mongoDB_model/attendanceModel");
 exports.showAllAttendance = async (req, res) => {
   const user = req.user;
   try {
     
-      const allAttendances = await Attendance.find({ roles: { $ne: "admin" } })
-      console.log(allAttendances);
-      res.json({
+      const allAttendances = await Attendance.find({ roles: { $ne: "admin" } }).populate("student")
+      
+     return  res.json({
         students: allAttendances,
         status: 2000,
       });

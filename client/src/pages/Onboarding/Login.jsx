@@ -35,19 +35,31 @@ export const Login = () => {
     axios
       .post("/api/login", { registrationNumber: regNo, password })
       .then((data) => {
-        toast({
-          description: data.data.msg,
-          status: "success",
-          position: "top-right",
-          duration: 3000,
-          isClosable: true,
-        });
+        if(data.data.status===2000){
+          toast({
+            description: data.data.msg,
+            status: "success",
+            position: "top-right",
+            duration: 3000,
+            isClosable: true,
+          });
+  
+          Cookies.set(COOKIE_SECRET, JSON.stringify(data.data), {
+            expires: 3,
+            sameSite: "strict",
+          });
+          navigate("/");
 
-        Cookies.set(COOKIE_SECRET, JSON.stringify(data.data), {
-          expires: 3,
-          sameSite: "strict",
-        });
-        navigate("/");
+        }
+        else if(data.data.status===4000){
+          toast({
+            description: data.data.msg,
+            status: "error",
+            position: "top-right",
+            duration: 3000,
+            isClosable: true,
+          }); 
+        }
       }).catch(e=>{
         console.log(e)
       })

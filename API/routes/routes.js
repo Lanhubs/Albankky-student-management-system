@@ -12,9 +12,12 @@ const {
 const { setAdminController } = require("../controllers/setAdmin");
 const {
   attendanceClassController,
-  verifyFingerPrintBeforeMarkingAttendanceController,
+  verifyStudent_id_BeforeMarkingAttendanceController,
 } = require("../controllers/attendClassController");
 const { showAllAttendance } = require("../controllers/AttendanceController");
+const {
+  fetchAttendance_for_course,
+} = require("../controllers/attendClassController");
 
 routes.get("/", getStudentController);
 routes.post("/enrol", middleware.upload.single("profilePic"), signUpController);
@@ -24,13 +27,14 @@ routes.get("/get-student", middleware.authToken, getStudentController);
 routes.post("/get-student", middleware.authToken, editMyDetailsController);
 routes.get("/get-students", middleware.authToken, getStudentsController);
 routes
-.route("/mark-attendance")
+  .route("/mark-attendance")
   .post(middleware.authToken, attendanceClassController)
-  .get(
-    middleware.authToken,
-    verifyFingerPrintBeforeMarkingAttendanceController
-  );
-  routes.get("/attendance", middleware.authToken,showAllAttendance)
+  .get(middleware.authToken, fetchAttendance_for_course);
+routes.post(
+  "/verify-student",
+  verifyStudent_id_BeforeMarkingAttendanceController
+);
+routes.get("/attendance", middleware.authToken, showAllAttendance);
 
 routes.post("/create-admin", setAdminController);
 

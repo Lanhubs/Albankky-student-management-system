@@ -5,7 +5,7 @@ const attendanceSchema = mongoose.Schema({
   },
   student: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "student",
+    ref: "students",
   },
   timer: {
     type: String,
