@@ -71,7 +71,7 @@ export const Login = () => {
   return (
     <Box
       w="100vw"
-      height={{ base: "100vh" }}
+      height={{ base: "100%", md: "100%", lg: "100vh" }}
       display={FLEX}
       flexDir="column"
       bg="#fafafa"

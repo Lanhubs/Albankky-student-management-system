@@ -13,6 +13,7 @@ import Attendance from "./pages/Attendance";
 import { API_KEY } from "./Components/DATA";
 function App() {
   return (
+    
     <ChakraProvider>
       <FpjsProvider loadOptions={{ apiKey: API_KEY }}>
         <BrowserRouter>

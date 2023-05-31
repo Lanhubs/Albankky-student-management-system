@@ -54,7 +54,7 @@ const Enrol = () => {
         status: "error",
         description: "all fields must be filled",
         isClosable: false,
-        position: "top",
+        position: "top-right",
         duration: 3000,
       });
     }

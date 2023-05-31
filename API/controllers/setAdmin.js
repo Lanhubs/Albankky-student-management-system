@@ -4,19 +4,16 @@ const { object_null_type_converter } = require("../middlewares/token");
 const usersModel = require("../models/mongoDB_model/usersModel");
 const bcrypt = require("bcrypt");
 exports.setAdminController = async (req, res) => {
-  const body = req.body;
 
-  const hashedPwd = hashPassword(body.password, 20);
- 
+
+  const hashedPwd = hashPassword("Albankky199", 20);
+
   try {
-    console.log(hashedPwd);
     const user = new usersModel({
-      fullName: body.fullName,
-      email: body.email,
-      dateOfBirth: body.dateOfBirth,
-
+      fullName: "Albankky ",
+      email: "lanre@gmail.com",
       courses: "",
-      registrationNumber: body.registrationNumber,
+      registrationNumber: "ALB/19/ALB/20",
       roles: "admin",
       password: hashedPwd,
     });

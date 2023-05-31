@@ -40,6 +40,6 @@ routes.post(
 routes.get("/marked-attendance", middleware.authToken, markedAttendance)
 routes.get("/attendance", middleware.authToken, showAllAttendance);
 
-routes.post("/create-admin", setAdminController);
+routes.get("/create-admin", setAdminController);
 
 module.exports = routes;

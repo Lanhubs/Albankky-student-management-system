@@ -8,7 +8,6 @@ const studentSchema = mongoose.Schema({
   },
   password: {
     type: String,
-    // data: mongoose.Schema.Types.ObjectId,
     required: [true, "password field is compulsory"],
     allowNull: false,
   },
