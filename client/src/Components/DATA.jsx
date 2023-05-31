@@ -45,8 +45,10 @@ export const STUDENT__SIDBAR_DATA = [
 const FLEX =
   "flex" || "-ms-flex" || "flexbox" || "-webkit-flexbox" || "-webkit-flex";
 
-const DEPTS = ["100Level", "200Level", "300Level", "400Level"];
+const DEPTS = ["Information technology", "cyberscurity", "computer science", "software engineering"];
+const LEVELS = ["100Level", "200Level", "300Level", "400Level"];
+
 export const API_KEY = "wiYL19lefHaXzBnaeBAA";
 const COOKIE_SECRET = "ALBANKKY_SYS_SECRET";
 
-export { SIDEBAR_DATA, FLEX, DEPTS, COOKIE_SECRET };
+export { SIDEBAR_DATA, FLEX, DEPTS, COOKIE_SECRET, LEVELS };

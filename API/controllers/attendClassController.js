@@ -11,7 +11,7 @@ exports.attendanceClassController = async (req, res) => {
       const attendance = new Attendance({
         course: course,
         student: user._id,
-        present: true,
+        isPresent: { status: true, day: Date.now() },
       });
 
       if (attendance.present) {
@@ -77,5 +77,27 @@ exports.fetchAttendance_for_course = async (req, res) => {
     });
   } catch (e) {
     res.json({ status: 4000, msg: `an error occurred would fix that ${e}` });
+  }
+};
+exports.markedAttendance = async (req, res) => {
+  var today = new Date(Date.now());
+
+  const user = req.user;
+  try {
+    var attendance = await Attendance.findOne({
+      student: user._id,
+      course: req.query.course,
+    });
+    if (attendance.isPresent.day.includes(today.getDate())) {
+      return res.json({
+        status: true,
+        status: 4000,
+      });
+    }
+  } catch (e) {
+    return res.json({
+      msg: e.msg,
+      status: 4000,
+    });
   }
 };

@@ -7,6 +7,7 @@ import {
   Link,
   HStack,
   Stack,
+  Image,
 } from "@chakra-ui/react";
 import { NavLink } from "react-router-dom";
 import Cookies from "js-cookie";
@@ -17,12 +18,12 @@ import { FaAnchor } from "react-icons/fa";
 import axios from "axios";
 const index = () => {
   const { user } = UserState();
-  const [details, setDetails] = React.useState();
+  const [courses, setCourses] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
 
   React.useEffect(() => {
     setLoading(true);
-    const cookie = JSON.parse(Cookies.get(COOKIE_SECRET));
+    const cookie = JSON.parse(localStorage.getItem(COOKIE_SECRET));
     const token = cookie.token;
     axios.get("/api/get-student", {
       headers: {
@@ -30,7 +31,7 @@ const index = () => {
       },
     })
      .then((data) => {
-        console.log(data.data)
+        setCourses(data.data.data)
       })
       .catch((e) => {
         console.log(e);
@@ -52,8 +53,8 @@ const index = () => {
           w={"full"}
           alignItems={{ base: "flex-start", md: "center" }}
         >
-          <Avatar
-            rounded="md"
+          <Image
+          rounded="md"
             height="full"
             src={user?.profilePic}
             width={{ base: "full", md: "30%" }}
@@ -76,7 +77,7 @@ const index = () => {
       </Card>
       <Stack my="1rem" gap="1rem" w={{ base: "100%", md: "95%" }}>
         <Text fontSize={18} > Courses you registered</Text>
-        {user?.courses?.map((item, idx) => {
+        {courses?.map((item, idx) => {
           return (
             <HStack
               key={idx}

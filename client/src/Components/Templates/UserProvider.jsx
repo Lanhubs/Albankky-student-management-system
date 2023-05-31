@@ -15,8 +15,8 @@ const UserProvider = ({ children }) => {
   const abortController = new AbortController();
   const navigate = useNavigate();
   React.useEffect(() => {
-    const cookie = Cookies.get(COOKIE_SECRET);
-
+    // const cookie = Cookies.get(COOKIE_SECRET);
+const cookie = localStorage.getItem(COOKIE_SECRET)
     if (!cookie || cookie === "" || cookie === " ") {
       navigate("/login");
     } else if (cookie !== "" || cookie !== " " || cookie !== null) {

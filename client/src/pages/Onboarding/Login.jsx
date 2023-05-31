@@ -12,7 +12,6 @@ import React from "react";
 import { COOKIE_SECRET, FLEX } from "../../Components/DATA";
 import { Cus_Input, Password } from "../../Components/Utils/Cus_Inputs";
 import Cookies from "js-cookie";
-
 import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 export const Login = () => {
@@ -31,11 +30,11 @@ export const Login = () => {
       });
     }
     setSubmitting(true);
-   
     axios
       .post("/api/login", { registrationNumber: regNo, password })
       .then((data) => {
-        if(data.data.status===2000){
+        if (data.data.status === 2000) {
+          console.log(data.data);
           toast({
             description: data.data.msg,
             status: "success",
@@ -43,26 +42,28 @@ export const Login = () => {
             duration: 3000,
             isClosable: true,
           });
-  
-          Cookies.set(COOKIE_SECRET, JSON.stringify(data.data), {
+
+          localStorage.setItem(COOKIE_SECRET, JSON.stringify(data.data));
+          /*            Cookies.set("ALBANKKY_SYS_SECRET", JSON.stringify(data.data), {
             expires: 3,
             sameSite: "strict",
+            
           });
+ */
           navigate("/");
-
-        }
-        else if(data.data.status===4000){
+        } else if (data.data.status === 4000) {
           toast({
             description: data.data.msg,
             status: "error",
             position: "top-right",
             duration: 3000,
             isClosable: true,
-          }); 
+          });
         }
-      }).catch(e=>{
-        console.log(e)
       })
+      .catch((e) => {
+        console.log(e);
+      });
   };
   React.useEffect(() => {
     Cookies.remove(COOKIE_SECRET);

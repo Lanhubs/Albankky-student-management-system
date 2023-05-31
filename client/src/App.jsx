@@ -8,7 +8,6 @@ import { FpjsProvider } from "@fingerprintjs/fingerprintjs-pro-react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Enrol from "./pages/Onboarding";
 import { Login } from "./pages/Onboarding/Login";
-import { Global } from "@emotion/react";
 import { ChakraProvider } from "@chakra-ui/react";
 import Attendance from "./pages/Attendance";
 import { API_KEY } from "./Components/DATA";
@@ -17,13 +16,13 @@ function App() {
     <ChakraProvider>
       <FpjsProvider loadOptions={{ apiKey: API_KEY }}>
         <BrowserRouter>
+
           <Routes>
             <Route path="/" exact element={<Home />} />
             <Route path="/enrol" exact element={
             <Wrapper>
               <Enrol />
             </Wrapper>
-            
           
             } />
             <Route path="/signup" exact element={<Enrol />} />

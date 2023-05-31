@@ -9,17 +9,23 @@ import {
   Text,
   useDisclosure,
   Button,
+  SliderMark,
+  Mark,
+  Image,
 } from "@chakra-ui/react";
 import axios from "axios";
 import React from "react";
 import { UserState } from "../Templates/UserProvider";
 import { Password } from "./Cus_Inputs";
 import { FLEX } from "../DATA";
-
+import { FaMarkdown, FaMarker } from "react-icons/fa";
+import { MdPark } from "react-icons/md";
+import MarkedIcon from "../../assets/marked.gif";
 const Authenticate_user_for_attendance = ({
   children,
   course,
   handleMarkedAttendance,
+  markedAttendance,
 }) => {
   const [msg, setMsg] = React.useState();
   const [password, setPassword] = React.useState("");
@@ -34,15 +40,21 @@ const Authenticate_user_for_attendance = ({
 
         status: "error",
       });
+    
     }
-
-    axios
-      .post(`/api/verify-student?course=${course}`, { regNo: user.registrationNumber,
-         password })
+    axios.post(`/api/verify-student?course=${course}`, {
+        regNo: user.registrationNumber,
+        password,
+      })
 
       .then((data) => {
-        console.log(resData);
         const resData = data.data;
+        if (resData.status === 2000) {
+          handleMarkedAttendance(true);
+          setMsg({ bg: "green.500", msg: resData.msg, status: "success" });
+
+          setTimeout(onClose(), 4000);
+        }
       })
       .catch((e) => {
         console.log(e);
@@ -88,27 +100,33 @@ const Authenticate_user_for_attendance = ({
               gap="1.5rem"
               justifyContent="center"
             >
-              <Avatar />
+              {markedAttendance ? (
+                <Image bg="none" src={MarkedIcon} />
+              ) : (
+                <>
+                  <Avatar src={user?.profilePic} />
 
-              <Text textAlign="center">
-                Enter your passsword to confirm your identity and mark your
-                attendance
-              </Text>
-              <Password
-                placeholder="**********"
-                handleChange={setPassword}
-                inputType="password"
-                label="enter your password"
-              />
+                  <Text textAlign="center">
+                    Enter your passsword to confirm your identity and mark your
+                    attendance
+                  </Text>
+                  <Password
+                    placeholder="**********"
+                    handleChange={setPassword}
+                    inputType="password"
+                    label="enter your password"
+                  />
 
-              <Button
-                rounded="sm"
-                height="50px"
-                w="full"
-                onClick={() => verifyAttendance_and_mark_handler()}
-              >
-                Mark attendance
-              </Button>
+                  <Button
+                    rounded="sm"
+                    height="50px"
+                    w="full"
+                    onClick={() => verifyAttendance_and_mark_handler()}
+                  >
+                    Mark attendance
+                  </Button>
+                </>
+              )}
             </Flex>
           </ModalBody>
         </ModalContent>

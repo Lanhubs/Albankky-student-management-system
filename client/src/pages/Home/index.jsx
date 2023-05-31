@@ -16,7 +16,7 @@ const Home = () => {
   const [details, setDetails] = React.useState();
   const [isAdmin, setIsAdmin] = React.useState(false);
   React.useEffect(() => {
-    const user = JSON.parse(Cookies.get(COOKIE_SECRET));
+    const user = JSON.parse(localStorage.getItem(COOKIE_SECRET));
 
     if (user.data.roles.includes("admin")) {
       setIsAdmin(true);

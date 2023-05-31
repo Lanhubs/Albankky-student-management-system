@@ -29,7 +29,6 @@ export const Cus_File_Upload_Input = ({ placeholder, handleChange }) => {
     <Box pos="relative">
       <Text
         fontSize={16}
-        
         textTransform="capitalize"
         fontWeight={"500"}
         color="rgba(0, 0, 0, 0.7)"
@@ -93,10 +92,14 @@ export const Cus_File_Upload_Input = ({ placeholder, handleChange }) => {
       >
         <Input
           onChange={({ target: { files } }) => {
-            
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(files[0])
+      
+            fileReader.onload = () => {
+              handleChange(fileReader.result);
+            };
             files && setImageName(files[0].name);
-            handleChange(files[0]);
-            console.log(files[0]);
+            // handleChange(files[0]);
             if (files) {
               setImage(URL.createObjectURL(files[0]));
             }
@@ -198,9 +201,6 @@ export const Cus_Select = (props) => {
     "structural programming",
     "functional programming",
   ];
-  React.useEffect(() => {
-    console.log(props.courses);
-  }, [props.courses]);
   return (
     <>
       <Box
@@ -269,7 +269,7 @@ export const Cus_Select_Dept = (props) => {
         onMouseLeave={() => setShowDepts(false)}
       >
         <FormLabel fontSize="18px" textTransform="capitalize">
-         {props.placeholder}
+          {props.label}
         </FormLabel>
         <Input
           border="1.7px solid"
@@ -277,7 +277,7 @@ export const Cus_Select_Dept = (props) => {
           w="full"
           cursor="pointer"
           height="50px"
-          placeholder="courses"
+          placeholder={props.placeholder}
           value={props.department}
           onMouseOut={() => setShowDepts(false)}
           onMouseLeave={() => setShowDepts(false)}
@@ -286,6 +286,7 @@ export const Cus_Select_Dept = (props) => {
         />
         <Box
           w="full"
+          shadow="md"
           m={0}
           p={0}
           pos="absolute"
@@ -296,7 +297,7 @@ export const Cus_Select_Dept = (props) => {
           flexDir="column"
           my="10px"
           overflowY={"visible"}
-          rounded="sm"
+          rounded="md"
         >
           {props.depts.map((item) => (
             <Box

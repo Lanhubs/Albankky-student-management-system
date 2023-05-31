@@ -1,4 +1,4 @@
-const { Schema } = require("mongoose");
+const { Schema, Mongoose } = require("mongoose");
 const mongoose = require("./connection");
 const studentSchema = mongoose.Schema({
   fullName: {
@@ -25,19 +25,25 @@ const studentSchema = mongoose.Schema({
 
   profilePic: {
     type: String,
-    // contentType: String,
-    required: [true, "profile picture of yourself is required"],
+    required: [true, "your picture is required"],
+    maxSize: 1000 * 1024 * 50,
+    maxPayloadSize: 1000 * 1024 * 50,
+
+  },
+  level: {
+    type: String,
+    required: [true, "your level is required"],
   },
   courses: [
     { type: mongoose.Schema.Types.ObjectId, ref: "courses", required: false },
   ],
   registrationNumber: {
     type: String,
+    uppercase: true,
     required: [true, "registration number is required"],
     unique: [true, "registration number already in use"],
   },
- 
- 
+
   department: {
     type: String,
     required: [true, "department must be selected"],

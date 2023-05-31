@@ -4,19 +4,36 @@ require("dotenv").config();
 const usersModel = require("../models/mongoDB_model/usersModel");
 var secret = process.env.ALBANKKY_SYS_SECRET;
 const generateToken = (_id, roles) =>
-  jwt.sign({ user: {_id, roles} }, secret, {
+  jwt.sign({ user: { _id, roles } }, secret, {
     expiresIn: "3d",
   });
 //   decode token
 const decodeToken = (token) => jwt.verify(token, secret);
-//   authorize token
-const authToken = async (req, res, next) => {
- 
+const regenerateToken = (req, res, next) => {
   if (
     req.headers.authorization &&
     req.headers.authorization.startsWith("Bearer")
   ) {
-   
+    const token = req.headers.authorization.split(" ")[1];
+    var decoded = decodeToken(token);
+    return jwt.sign(
+      { user: { _id: decoded._id, roles: decoded.roles } },
+      secret,
+      {
+        expiresIn: "3d",
+      }
+    );
+    next();
+  } else {
+    res.status(401).send("unauthorized or invalid token");
+  }
+};
+//   authorize token
+const authToken = async (req, res, next) => {
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith("Bearer")
+  ) {
     const token = req.headers.authorization.split(" ")[1];
     const decodedToken = decodeToken(token);
     req.user = await usersModel.findOne({

@@ -6,21 +6,25 @@ import { FLEX } from "../DATA";
 import Sidebar from "../Templates/Sidebar";
 import { UserState } from "../Templates/UserProvider";
 const Header = (props) => {
-  const {user} = UserState();
+  const { user } = UserState();
   return (
     <HStack
       w="full"
       bg="#fff"
       shadow="md"
       p="1rem"
-      px={{base: "10%", md: "5%"}}
+      px={{ base: "10%", md: "5%" }}
       justifyContent="space-between"
     >
       <Text>{user?.fullName}</Text>
       <HStack gap="1rem">
         <Avatar as={NavLink} src={user?.profilePic} w="50px" height="50px" />
-        
-        <Box cursor="pointer" d={{ base: FLEX, md: "none" }} onClick={()=>props.setShowSideBar(true)}>
+
+        <Box
+          cursor="pointer"
+          d={{ base: FLEX, md: "none" }}
+          onClick={() => props.setShowSideBar(true)}
+        >
           <FaBars fontSize={20} />
         </Box>
       </HStack>

@@ -25,13 +25,13 @@ const Attendance = () => {
   const params = useParams();
   const navigate = useNavigate();
   const { user, token, isAdmin, setIsAdmin } = UserState();
-  
-
+  const [markedAttendance, setMarkedAttendance] = React.useState(false);
   const [admin, setAdmin] = React.useState(false);
   const [attendances, setAttendances] = React.useState();
+
   const { toast, ToastContainer } = createStandaloneToast();
   React.useEffect(() => {
-    const user = JSON.parse(Cookies.get(COOKIE_SECRET))
+    const user = JSON.parse(localStorage.getItem(COOKIE_SECRET));
     if (user.data.roles.includes("admin")) {
       setAdmin(true);
       axios
@@ -48,7 +48,7 @@ const Attendance = () => {
           console.log(e);
         });
     } else {
-      setActive(user.data)
+      setActive(user.data);
       axios
         .get(`/api/mark-attendance?course=${params.course}`, {
           headers: {
@@ -56,7 +56,6 @@ const Attendance = () => {
           },
         })
         .then((data) => {
-          
           setAttendances(data.data.students);
         })
         .catch((e) => {
@@ -64,6 +63,20 @@ const Attendance = () => {
         });
     }
   }, []);
+  // check if marked attendance
+  /*  React.useEffect(() => {
+
+    fetch(`/api/marked-attendance?course=${params.course}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+      console.log(data)
+      })
+      .catch((e) => console.log(e));
+  }, []); */
   return (
     <Wrapper>
       {admin ? (
@@ -97,17 +110,26 @@ const Attendance = () => {
             w="100%"
             height="100%"
           >
-            <Heading fontSize={25}>Students in Attendance</Heading>
-            <Heading fontSize={20} my="1rem">
+            <Heading fontSize={25} textAlign={{ base: "center", md: "left" }}>
+              Students in Attendance
+            </Heading>
+            <Heading
+              fontSize={20}
+              my="1rem"
+              textAlign={{ base: "center", md: "left" }}
+            >
               Course name: {params?.course}
             </Heading>
 
             <Flex
               rowGap="1rem"
               columnGap="1rem"
+              alignItems={{ base: "center", md: "" }}
+              flexDir={{ base: "column", md: "row" }}
+              justifyContent={{ base: "center", md: "" }}
               w="full"
               h="full"
-              flexWrap={{ base: "wrap", md: "wrap", lg: "wrap" }}
+              flexWrap={{ base: "", md: "wrap", lg: "wrap" }}
             >
               {attendances?.map((item, idx) => {
                 return (
@@ -117,8 +139,8 @@ const Attendance = () => {
                     p="1rem"
                     bg="#fff"
                     padding="1rem"
-                    height={"250px"}
-                    w={{ base: "47%", md: "290px" }}
+                    height={{ base: "270px", md: "250px" }}
+                    w={{ base: "90%", md: "290px" }}
                     display={FLEX}
                     columnGap="1rem"
                     key={idx}
@@ -129,19 +151,33 @@ const Attendance = () => {
                   >
                     <Avatar
                       width="60px"
-                      src={item.student.profilePic}
+                      src={item.student?.profilePic}
                       height="60px"
                     />
-                    <Text>{item.student.fullName}</Text>
-                    <Text>{item.student.registrationNumber}</Text>
-                    {active.registrationNumber ===
-                    item.student.registrationNumber ? (
-                      <Authenticate_user_for_attendance course ={params.course}>
-                        <Button >Attend class</Button>
-                      </Authenticate_user_for_attendance>
-                    ) : (
-                      ""
-                    )}
+                    <Text>{item.student?.fullName}</Text>
+                    <Text>{item.student?.registrationNumber}</Text>
+                    <>
+                      {markedAttendance ? (
+                        <></>
+                      ) : markedAttendance ? (
+                        ""
+                      ) : (
+                        <>
+                          {active.registrationNumber ===
+                          item.student?.registrationNumber ? (
+                            <Authenticate_user_for_attendance
+                              attendanceStatus={markedAttendance}
+                              handleMarkedAttendance={setMarkedAttendance}
+                              course={params.course}
+                            >
+                              <Button>Attend class</Button>
+                            </Authenticate_user_for_attendance>
+                          ) : (
+                            ""
+                          )}
+                        </>
+                      )}
+                    </>
                   </Box>
                 );
               })}

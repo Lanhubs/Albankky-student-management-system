@@ -12,11 +12,7 @@ const {
 } = require("../middlewares/passwordHandler");
 const signUpController = async (req, res) => {
   try {
-    var { password, ...rest } = object_null_type_converter(req.body);
-
-    const profilePic = req.file.path
-      .replaceAll("\\", "/")
-      .replace("public", "");
+    var { password, ...rest } = req.body;
     const encryptedPwd = hashPassword(password);
 
     const docs = new usersModel({
@@ -24,7 +20,8 @@ const signUpController = async (req, res) => {
       email: rest.email,
       password: encryptedPwd,
       courses: [],
-      profilePic,
+      level: rest.level,
+      profilePic: rest.profilePic,
       dateOfBirth: rest.dateOfBirth,
       registrationNumber: rest.registrationNumber,
       department: rest.department,
@@ -36,9 +33,7 @@ const signUpController = async (req, res) => {
 
     if (!docs.roles !== "admin") {
     }
-    // var userAttendance =
     const courses = rest.courses.split(",");
-
     courses.map((item) => {
       Courses.push({
         courseName: item,
@@ -58,20 +53,19 @@ const signUpController = async (req, res) => {
       docs.courses.push(data._id);
     });
 
-    var { password, ...rest } = await docs.save();
+    var data = await docs.save();
+    var resData = data["$__"] ? data._doc : data;
+    var { password, ...rest } = resData;
 
     return res.json({
       data: rest,
       status: 2000,
-      token: generateToken(docs._id, docs.roles),
+      token: generateToken(rest._id, rest.roles),
       msg: "You've successfully enrolled",
     });
   } catch (error) {
-    console.log(error);
     if (error) {
-      return res
-        .status(405)
-        .send({ msg: error /* handleErrorMsg(error) */, status: 4000 });
+      return res.json({ msg: handleErrorMsg(error), status: 4000 });
     }
   }
 };
@@ -89,7 +83,7 @@ const loginController = async (req, res) => {
 
     if (decryptedPassword) {
       const { password, ...rest } = user;
-      console.log(rest);
+
       return res.json({
         data: rest,
         msg: "successfully logged in",
