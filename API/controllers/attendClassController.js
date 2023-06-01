@@ -101,3 +101,11 @@ exports.markedAttendance = async (req, res) => {
     });
   }
 };
+exports.auto_mark=(req, res)=>{
+  const user = req.user
+  try {
+     
+  } catch (error) {
+    
+  }
+}

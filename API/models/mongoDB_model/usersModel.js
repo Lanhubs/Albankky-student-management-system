@@ -6,6 +6,9 @@ const studentSchema = mongoose.Schema({
     required: [true, "Full name is compulsory"],
     allowNull: false,
   },
+  username: {
+    required: [false, "username is required"],
+  },
   password: {
     type: String,
     required: [true, "password field is compulsory"],
@@ -27,14 +30,17 @@ const studentSchema = mongoose.Schema({
     required: [true, "your picture is required"],
     maxSize: 1000 * 1024 * 50,
     maxPayloadSize: 1000 * 1024 * 50,
-
   },
   level: {
     type: String,
     required: [true, "your level is required"],
   },
   courses: [
-    { type: mongoose.Schema.Types.ObjectId, ref: "courses", required: false },
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "courses",
+      required: [true, "courses must be selected"],
+    },
   ],
   registrationNumber: {
     type: String,
@@ -57,5 +63,16 @@ const studentSchema = mongoose.Schema({
 
     default: ["student"],
   },
+});
+studentSchema.pre("save", (next) => {
+  if (this.method === "POST") {
+    if (this.roles === "admin") {
+      this.courses.required = false;
+      this.department.required = false;
+      this.dateOfBirth.required = false;
+    }
+    this.username.required === false;
+  }
+  next();
 });
 module.exports = mongoose.model("students", studentSchema);

@@ -1,8 +1,9 @@
 const express = require("express");
+const CronJob = require("cron");
 const { signupController } = require("../controllers/AuthController");
 const routes = express.Router();
 const middleware = require("../middlewares");
-const fileupload= require("express-fileupload")
+const fileupload = require("express-fileupload");
 const {
   signUpController,
   loginController,
@@ -14,7 +15,8 @@ const { setAdminController } = require("../controllers/setAdmin");
 const {
   attendanceClassController,
   verifyStudent_id_BeforeMarkingAttendanceController,
-  markedAttendance
+  markedAttendance,
+  auto_mark,
 } = require("../controllers/attendClassController");
 const { showAllAttendance } = require("../controllers/AttendanceController");
 const {
@@ -23,7 +25,7 @@ const {
 const { upload } = require("../middlewares/fileupload");
 
 routes.get("/", getStudentController);
-routes.post("/enrol"/* , upload.single("profilePic") */, signUpController);
+routes.post("/enrol" /* , upload.single("profilePic") */, signUpController);
 routes.post("/login", loginController);
 
 routes.get("/get-student", middleware.authToken, getStudentController);
@@ -37,9 +39,16 @@ routes.post(
   "/verify-student",
   verifyStudent_id_BeforeMarkingAttendanceController
 );
-routes.get("/marked-attendance", middleware.authToken, markedAttendance)
+routes.get("/marked-attendance", middleware.authToken, markedAttendance);
 routes.get("/attendance", middleware.authToken, showAllAttendance);
 
-routes.get("/create-admin", setAdminController);
+routes.post("/create-admin", setAdminController);
+routes.post("/auto-mark-attendance", middleware.authToken, auto_mark);
+
+/* CronJob.job({
+  onTick: () => {
+    routes.post("/auto-mark-attendance", middleware.authToken, auto_mark);
+  },
+}); */
 
 module.exports = routes;
