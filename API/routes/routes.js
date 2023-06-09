@@ -23,9 +23,10 @@ const {
   fetchAttendance_for_course,
 } = require("../controllers/attendClassController");
 const { upload } = require("../middlewares/fileupload");
+const { verifyFace } = require("../controllers/verifyFace");
 
 routes.get("/", getStudentController);
-routes.post("/enrol" /* , upload.single("profilePic") */, signUpController);
+routes.post("/enrol" , signUpController);
 routes.post("/login", loginController);
 
 routes.get("/get-student", middleware.authToken, getStudentController);
@@ -42,13 +43,9 @@ routes.post(
 routes.get("/marked-attendance", middleware.authToken, markedAttendance);
 routes.get("/attendance", middleware.authToken, showAllAttendance);
 
-routes.post("/create-admin", setAdminController);
+routes.get("/create-admin", setAdminController);
 routes.post("/auto-mark-attendance", middleware.authToken, auto_mark);
 
-/* CronJob.job({
-  onTick: () => {
-    routes.post("/auto-mark-attendance", middleware.authToken, auto_mark);
-  },
-}); */
+routes.post("/compare-faces",upload.single("video"), verifyFace)
 
 module.exports = routes;

@@ -65,7 +65,7 @@ const studentSchema = mongoose.Schema({
   },
 });
 studentSchema.pre("save", (next) => {
-  if (this.method === "POST") {
+  if (this.method === "GET") {
     if (this.roles === "admin") {
       this.courses.required = false;
       this.department.required = false;

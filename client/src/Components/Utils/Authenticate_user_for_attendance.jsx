@@ -1,31 +1,22 @@
 import {
-  Avatar,
-  Flex,
-  Box,
   Modal,
-  ModalBody,
   ModalContent,
   ModalOverlay,
-  Text,
   useDisclosure,
-  Button,
-  SliderMark,
-  Mark,
   Image,
+  Button,
 } from "@chakra-ui/react";
 import axios from "axios";
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { UserState } from "../Templates/UserProvider";
-import { Password } from "./Cus_Inputs";
-import { FLEX } from "../DATA";
-import { FaMarkdown, FaMarker } from "react-icons/fa";
-import { MdPark } from "react-icons/md";
-import MarkedIcon from "../../assets/marked.gif";
+import * as faceapi from "face-api.js";
+import Webcam from "react-webcam";
+import SampleImage from "../../assets/sampleImage.jpg";
+// import 'face-api.js/dist/face-api.css'
 const Authenticate_user_for_attendance = ({
   children,
   course,
   handleMarkedAttendance,
-  markedAttendance,
 }) => {
   const [msg, setMsg] = React.useState();
   const [password, setPassword] = React.useState("");
@@ -40,9 +31,9 @@ const Authenticate_user_for_attendance = ({
 
         status: "error",
       });
-    
     }
-    axios.post(`/api/verify-student?course=${course}`, {
+    axios
+      .post(`/api/verify-student?course=${course}`, {
         regNo: user.registrationNumber,
         password,
       })
@@ -76,7 +67,7 @@ const Authenticate_user_for_attendance = ({
           width={{ base: "90%", md: "50%" }}
           p="1.5rem 1rem"
         >
-          <ModalBody>
+          {/*  <ModalBody>
             {msg && (
               <Box
                 height="40px"
@@ -128,7 +119,8 @@ const Authenticate_user_for_attendance = ({
                 </>
               )}
             </Flex>
-          </ModalBody>
+          </ModalBody> */}
+          <FaceComparison />
         </ModalContent>
       </Modal>
     </>
@@ -136,3 +128,64 @@ const Authenticate_user_for_attendance = ({
 };
 
 export default Authenticate_user_for_attendance;
+
+const FaceComparison = ({ unmount }) => {
+  const videoRef = React.useRef(null);
+  const mediaRecorderRef = React.useRef(null);
+  const chunksRef = React.useRef([]);
+  const [blob, setBlob] = React.useState(null);
+  // Function to send video to the backend server
+  useEffect(() => {
+    (async () => {
+      let mediaStream;
+      let chunks= [];
+      // Get access to the webcam video stream
+
+      var stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      videoRef.current.srcObject = stream;
+      // Start recording when component mounts
+      mediaRecorderRef.current = new MediaRecorder(stream);
+      mediaRecorderRef.current.addEventListener("dataavailable", (event) => {
+      
+       chunks.push(event.data);
+      });
+      mediaRecorderRef.current.start();
+
+      // Stop recording and send video to the backend server when component unmounts
+      return () => {
+        mediaRecorderRef.current.stop();
+        stream.getTracks().forEach((track) => track.stop());
+        const blob = new Blob(chunks, { type: "video/webm" });
+        setBlob(blob);
+      };
+    })();
+  }, []);
+  console.log(blob);
+  const verifyFace = () => {
+    const formData = new FormData();
+    
+    formData.append("video", blob, "recorded.webm");
+
+    fetch("/api/compare-faces", {
+      method: "POST",
+
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // Handle response from the server
+      })
+      .catch((error) => {
+        // Handle error
+      });
+  };
+
+  return (
+    <div>
+      <video autoPlay ref={videoRef} id="video" className="w-full h-full" />
+      <button onClick={verifyFace} className="">
+        verify face
+      </button>
+    </div>
+  );
+};

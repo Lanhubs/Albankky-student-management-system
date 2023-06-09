@@ -71,14 +71,24 @@ const signUpController = async (req, res) => {
 };
 const loginController = async (req, res) => {
   const { password } = req.body;
+  let user;
   try {
-    const user = await usersModel
-      .findOne({
-        registrationNumber: req.body.registrationNumber,
-      })
-      .populate("courses")
-      .lean();
-
+    if (req.body.registrationNumber) {
+      user = await usersModel
+        .findOne({
+          registrationNumber: req.body.registrationNumber,
+        })
+        .populate("courses")
+        .lean();
+    }
+    if (req.body.userName) {
+      user = await usersModel
+        .findOne({
+          userName: req.body.userName,
+        })
+        .populate("courses")
+        .lean();
+    }
     const decryptedPassword = comparePasswords(password, user.password);
 
     if (decryptedPassword) {

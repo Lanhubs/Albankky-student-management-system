@@ -114,7 +114,7 @@ const Enrol = () => {
   };
   return (
     <>
-      <Box width={"100vw"} height={{ base: "full", md: "100vh" }}>
+      <Box width={"100vw"} height="100%">
         <Heading
           fontSize={{ base: 20, md: 30 }}
           my="10"
@@ -131,7 +131,6 @@ const Enrol = () => {
           display={FLEX}
           bg="#fff"
           shadow="md"
-          // my="20%"
           flexDirection={{
             base: "column-reverse",
             md: "column-reverse",
@@ -149,6 +148,8 @@ const Enrol = () => {
             display={"flex"}
             flexDir="column"
             gap="1rem"
+          m="1rem"
+
           >
             <Cus_File_Upload_Input handleChange={setProfilePic} />
             <Text>

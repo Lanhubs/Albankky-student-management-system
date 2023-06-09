@@ -1,4 +1,4 @@
-const { genSaltSync } = require("bcrypt");
+
 const CryptoJS = require("crypto-js");
 require("dotenv").config();
 const salt = "I am a nigga";

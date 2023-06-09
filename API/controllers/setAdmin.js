@@ -2,7 +2,7 @@ const { handleErrorMsg } = require("../middlewares/errorHandler");
 const { hashPassword } = require("../middlewares/passwordHandler");
 const { object_null_type_converter } = require("../middlewares/token");
 const usersModel = require("../models/mongoDB_model/usersModel");
-const bcrypt = require("bcrypt");
+
 exports.setAdminController = async (req, res) => {
 
 

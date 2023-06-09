@@ -103,6 +103,7 @@ export const Cus_File_Upload_Input = ({ placeholder, handleChange }) => {
             if (files) {
               setImage(URL.createObjectURL(files[0]));
             }
+
           }}
           outline={0}
           padding={"10px"}
@@ -206,8 +207,10 @@ export const Cus_Select = (props) => {
       <Box
         w="full"
         pos="relative"
-        onMouseOut={() => setShowCourses(false)}
-        onMouseLeave={() => setShowCourses(false)}
+/*         onMouseOut={() => setShowCourses(false)}
+        onMouseLeave={() => setShowCourses(false)} */
+        onFocus={() => setShowCourses(true)}
+
       >
         <FormLabel fontSize="18px" textTransform="capitalize">
           choose courses
@@ -221,9 +224,9 @@ export const Cus_Select = (props) => {
           placeholder="courses"
           value={props.courses}
           onMouseOut={() => setShowCourses(false)}
-          onMouseLeave={() => setShowCourses(false)}
-          onChange={(e) => props.setCourses(e.target.value)}
+          // onMouseLeave={() => setShowCourses(false)}
           onFocus={() => setShowCourses(true)}
+          onChange={(e) => props.setCourses(e.target.value)}
         />
         <Box
           w="full"
